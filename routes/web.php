@@ -14,4 +14,5 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/transaction', [HomeController::class, 'index']);
+//Route::get('/transaction', [HomeController::class, 'index']);
