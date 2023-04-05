@@ -4,6 +4,9 @@
 
 @section('main')
     <div class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
+        @if(session()->has('success'))
+            <x-alert type="success">{{ session('success') }}</x-alert>
+        @endif
         <div class="flex justify-end">
             <a href="/user/create" class="bg-green-500 text-white px-3 py-1 rounded-md font-medium ml-auto">Tambah User</a>
         </div>
