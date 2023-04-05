@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,6 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/transaction', [HomeController::class, 'index']);
-//Route::get('/transaction', [HomeController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);
+Route::get('/user/create', [UserController::class, 'create']);
+Route::post('/user/create', [UserController::class, 'store']);

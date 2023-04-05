@@ -9,7 +9,7 @@
     @vite(['resources/css/app.css', 'resources/ts/app.ts'])
 </head>
 <body>
-    <aside class="fixed top-0 left-0 bottom-0 w-[240px] h-screen bg-white border border-solid border-[rgba(0, 0, 0, 0.12)] p-3 overflow-y-auto">
+    <aside class="fixed top-0 left-0 bottom-0 w-[240px] h-screen bg-white border-r border-solid border-[rgba(0, 0, 0, 0.12)] p-3 overflow-y-auto">
         <div class="flex items-center">
             <img src="/__test__/rice.png" width="50" />
             <h1 class="text-xl font-semibold ml-2">POINT OF SALES</h1>
@@ -43,10 +43,10 @@
             </li>
         </ul>
     </aside>
-    <nav>
-
+    <nav class="fixed top-0 right-0 w-full max-w-[calc(100%-240px)] h-11 bg-white border-b border-solid border-[rgba(0, 0, 0, 0.12)] px-4 flex items-center">
+        <h2 class="font-medium text-xl">@yield('title')</h2>
     </nav>
-    <main>
+    <main class="w-full max-w-[calc(100%-240px)] mt-14 ml-auto max-ipad:px-4 min-ipad:px-8 relative">
         @yield('main')
     </main>
 </body>
