@@ -1,16 +1,11 @@
-import { Modal } from "flowbite";
+import ModalDelete from "../../components/ModalDelete";
 
-const popupEl = document.getElementById('popup-modal')
+const deleteActionBtn = document.getElementsByClassName('table-delete-btn')
 
-// options with default values
-const popupOptions = {
-    placement: 'bottom-right',
-    backdrop: 'dynamic',
-    backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
-    closable: true
+for(const button of deleteActionBtn) {
+    const modalDelete = new ModalDelete(button.nextElementSibling)
+
+    button.addEventListener('click', () => modalDelete.show())
 }
 
-// @ts-ignore
-const popupModal = new Modal(popupEl, popupOptions);
-
-popupModal.show()
+export {}

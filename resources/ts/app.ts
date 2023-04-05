@@ -1,3 +1,2 @@
 import './bootstrap';
-import './script/dashboard'
-import './script/user/index'
+import './script/index'

@@ -20,11 +20,6 @@
                 <span class="sr-only">Search</span>
             </button>
         </form>
-        <div class="fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] z-40">
-            <div class="w-full h28 max-w-xl bg-white m-[15%_auto]">
-                <h1>Apakah anda yakin ingin</h1>
-            </div>
-        </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-3">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -51,7 +46,7 @@
                 </thead>
                 <tbody>
                    @foreach($users as $user)
-                       <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                       <tr class="@if($loop->index % 2 == 0) bg-white @else bg-gray-50 @endif border-b dark:bg-gray-900 dark:border-gray-700">
                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                {{ $user['name'] }}
                            </th>
@@ -68,7 +63,13 @@
                                {{ $user['role'] }}
                            </td>
                            <td class="px-6 py-4">
-                               <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                               <a href="#" class="text-sm hover:underline">
+                                   <span class="material-icons table-action bg-blue-500 p-1 rounded text-white">edit</span>
+                               </a>
+                               <button class="text-sm hover:underline table-delete-btn">
+                                   <span class="material-icons table-action bg-red-500 p-1 rounded text-white">delete</span>
+                               </button>
+                               <x-modal.delete description="Apakah anda ingin menghapus {{ $user['name'] }}" action="/user" id="{{ $user['id'] }}" />
                            </td>
                        </tr>
                    @endforeach
@@ -77,7 +78,9 @@
             <nav class="flex items-center justify-between py-4 px-6" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $users->total() }}</span></span>
                 <div class="flex gap-4">
-                    <span class="material-icons cursor-pointer">navigate_before</span>
+                    <a href="{{ $users->previousPageUrl() }}">
+                        <span class="material-icons cursor-pointer">navigate_before</span>
+                    </a>
                     <a href="{{ $users->nextPageUrl() }}">
                         <span class="material-icons cursor-pointer">navigate_next</span>
                     </a>

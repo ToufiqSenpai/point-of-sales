@@ -60,4 +60,16 @@ class UserController extends Controller
             'success' => 'User telah ditambahkan.'
         ]);
     }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $user = User::find($request->get('id'));
+
+        if($user) {
+            $user->delete();
+            return redirect('/user')->with(['success' => 'User berhasil dihapus']);
+        } else {
+            return redirect('/user')->with(['error' => 'User tidak ada']);
+        }
+    }
 }

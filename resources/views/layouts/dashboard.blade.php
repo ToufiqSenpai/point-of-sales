@@ -41,6 +41,26 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
+                    <span class="material-icons sidebar">person</span>
+                    <span class="ml-3">User</span>
+                </button>
+                <ul class="space-y-1 max-h-0 overflow-hidden duration-300 mt-1  ">
+                    <li>
+                        <a href="/user" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>List</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/user/create" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Tambah User</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </aside>
     <nav class="fixed top-0 right-0 w-full max-w-[calc(100%-240px)] h-11 bg-white border-b border-solid border-[rgba(0, 0, 0, 0.12)] px-4 flex items-center">

@@ -1,21 +1,17 @@
 <?php
 
-namespace App\View\Components\Modal;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Delete extends Component
+class Alert extends Component
 {
     /**
      * Create a new component instance.
      */
-    public function __construct(
-        public string $description,
-        public string $action,
-        public string $id
-    )
+    public function __construct(public string $type)
     {
         //
     }
@@ -25,6 +21,6 @@ class Delete extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modal.delete');
+        return view('components.alert');
     }
 }

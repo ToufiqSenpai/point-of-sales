@@ -17,5 +17,6 @@ use App\Http\Controllers\UserController;
 
 Route::get('/transaction', [HomeController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
+Route::delete('/user', [UserController::class, 'destroy']);
 Route::get('/user/create', [UserController::class, 'create']);
 Route::post('/user/create', [UserController::class, 'store']);
