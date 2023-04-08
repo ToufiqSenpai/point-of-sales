@@ -66,7 +66,7 @@
                                {{ $user['role'] }}
                            </td>
                            <td class="px-6 py-4">
-                               <a href="#" class="text-sm hover:underline">
+                               <a href="/user/edit/{{ $user['id'] }}" class="text-sm hover:underline">
                                    <span class="material-icons table-action bg-blue-500 p-1 rounded text-white">edit</span>
                                </a>
                                <button class="text-sm hover:underline table-delete-btn">

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -15,10 +16,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->string('phone');
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->nullable();
             $table->string('password');
-            $table->enum('role', ['ADMIN', 'OWNER'])->default('ADMIN');
+            $table->rememberToken();
+            $table->enum('role', ['CASHIER', 'ADMIN', 'OWNER'])->default('CASHIER');
             $table->timestamps();
         });
 

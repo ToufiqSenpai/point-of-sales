@@ -7,21 +7,21 @@
         @csrf
         <div>
             <div>
-                <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nama</label>
+                <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nama *</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" >
                 @error('name')
                     <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-2">
-                <label for="username" class="block mb-1 text-sm font-medium text-gray-900">Username</label>
+                <label for="username" class="block mb-1 text-sm font-medium text-gray-900">Username *</label>
                 <input type="text" id="username" name="username" value="{{ old('username') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 @error('username')
                     <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-2">
-                <label for="password" class="block mb-1 text-sm font-medium text-gray-900">Password</label>
+                <label for="password" class="block mb-1 text-sm font-medium text-gray-900">Password *</label>
                 <input type="password" id="password" name="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 @error('password')
                     <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
