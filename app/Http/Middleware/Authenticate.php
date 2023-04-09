@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -18,6 +19,10 @@ class Authenticate extends Middleware
 
     public function handle($request, Closure $next, ...$roles)
     {
-
+        if($request->user() && in_array($request->user()->role, $roles)) {
+            return $next($request);
+        } else {
+            return back();
+        }
     }
 }

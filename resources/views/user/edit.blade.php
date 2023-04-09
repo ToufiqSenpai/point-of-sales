@@ -9,24 +9,25 @@
         <input type="hidden" name="id" value="{{ $user['id'] }}" />
         <div>
             <div>
-                <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nama</label>
+                <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nama *</label>
                 <input type="text" id="name" name="name" value="{{ old('name', $user['name']) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 @error('name')
                 <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-2">
-                <label for="username" class="block mb-1 text-sm font-medium text-gray-900">Username</label>
+                <label for="username" class="block mb-1 text-sm font-medium text-gray-900">Username *</label>
                 <input type="text" id="username" name="username" value="{{ old('username', $user['username']) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 @error('username')
                 <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-2">
-                <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Select an option</label>
+                <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Role *</label>
                 <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                    <option value="ADMIN" @if($user['role'] == 'ADMIN') selected @endif>ADMIN</option>
                     <option value="OWNER" @if($user['role'] == 'OWNER') selected @endif>OWNER</option>
+                    <option value="ADMIN" @if($user['role'] == 'ADMIN') selected @endif>ADMIN</option>
+                    <option value="CASHIER" @if($user['role'] == 'CASHIER') selected @endif>CASHIER</option>
                 </select>
             </div>
         </div>
@@ -44,6 +45,9 @@
                 @error('phone')
                 <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
+            </div>
+            <div class='flex justify-end my-1'>
+                <a href='/user/change-password/{{ $user['id'] }}' class='text-sm text-blue-400 cursor-pointer no-underline hover:underline'>Lupa password?</a>
             </div>
             <button type="submit" class="bg-green-500 py-1 w-full rounded-md text-white text-lg font-medium mt-2">SUBMIT</button>
         </div>
