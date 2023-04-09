@@ -21,4 +21,9 @@ class SupplierController extends Controller
             'suppliers' => $suppliers->paginate(10)
         ]);
     }
+
+    public function add(): View
+    {
+        return view('supplier.add');
+    }
 }

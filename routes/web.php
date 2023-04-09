@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
@@ -18,13 +19,19 @@ use App\Http\Controllers\SupplierController;
 |
 */
 
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');
-Route::post('/login', [LoginController::class, 'authenticate']);
+Route::get('/', [IndexController::class, 'index']);
 
-Route::get('/home', [HomeController::class, 'index'])->middleware('auth:CASHIER,ADMIN,OWNER');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate']);
+});
 
 Route::middleware('auth:ADMIN,OWNER')->group(function() {
+    Route::get('/home', [HomeController::class, 'index']);
+
+//    Supplier endpoint
     Route::get('/supplier', [SupplierController::class, 'index']);
+    Route::get('/supplier/add', [SupplierController::class, 'add']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {
