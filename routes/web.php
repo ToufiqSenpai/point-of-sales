@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ProductUnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,13 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::put('/supplier/edit', [SupplierController::class, 'update']);
     Route::delete('/supplier', [SupplierController::class, 'destroy']);
 
-
+//    Product unit endpoint
+    Route::get('/product/unit', [ProductUnitController::class, 'index']);
+    Route::get('/product/unit/add', [ProductUnitController::class, 'add']);
+    Route::post('/product/unit/add', [ProductUnitController::class, 'store']);
+    Route::get('/product/unit/edit/{id}', [ProductUnitController::class, 'edit']);
+    Route::put('/product/unit/edit', [ProductUnitController::class, 'update']);
+    Route::delete('/product/unit', [ProductUnitController::class, 'destroy']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {

@@ -4,9 +4,6 @@
 
 @section('main')
     <div class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
-        @if(session()->has('success'))
-            <x-alert type="success">{{ session('success') }}</x-alert>
-        @endif
         <div class="flex justify-end">
             <a href="/user/add" class="bg-green-500 text-white px-3 py-1 rounded-md font-medium ml-auto">Tambah User</a>
         </div>
@@ -65,7 +62,7 @@
                            <td class="px-6 py-4">
                                {{ $user['role'] }}
                            </td>
-                           <td class="px-6 py-4">
+                           <td class="px-6 py-4 flex gap-1">
                                <a href="/user/edit/{{ $user['id'] }}" class="text-sm hover:underline">
                                    <span class="material-icons table-action bg-blue-500 p-1 rounded text-white">edit</span>
                                </a>
@@ -81,12 +78,17 @@
             <nav class="flex items-center justify-between py-4 px-6" aria-label="Table navigation">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $users->firstItem() }}-{{ $users->lastItem() }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $users->total() }}</span></span>
                 <div class="flex gap-4">
-                    <a href="{{ $users->previousPageUrl() }}">
-                        <span class="material-icons cursor-pointer">navigate_before</span>
-                    </a>
-                    <a href="{{ $users->nextPageUrl() }}">
-                        <span class="material-icons cursor-pointer">navigate_next</span>
-                    </a>
+                    @if($users->previousPageUrl())
+                        <a href="{{ $users->previousPageUrl() }}">
+                            <span class="material-icons cursor-pointer">navigate_before</span>
+                        </a>
+                    @endif
+                    <p>{{ $users->currentPage() }}</p>
+                    @if($users->nextPageUrl())
+                            <a href="{{ $users->nextPageUrl() }}">
+                                <span class="material-icons cursor-pointer">navigate_next</span>
+                            </a>
+                        @endif
                 </div>
             </nav>
         </div>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplierUpdateRequest extends FormRequest
+class ProductUnitUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,13 +21,9 @@ class SupplierUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->get('id');
         return [
             'id' => 'required',
-            'name' => 'required|max:155|unique:suppliers,name,'. $id,
-            'phone' => 'required|max:50|unique:suppliers,phone,'. $id,
-            'email' => 'nullable|email:rfc,dns|unique:suppliers,email,'. $id,
-            'address' => 'nullable|max:10000',
+            'name' => 'required|max:99|unique:product_units,name,'. $this->get('id'),
             'description' => 'nullable|max:10000'
         ];
     }
@@ -37,8 +33,7 @@ class SupplierUpdateRequest extends FormRequest
         return [
             'required' => 'Harus diisi',
             'unique' => ':attribute sudah tersedia',
-            'max' => ':attribute terlalu panjang',
-            'email' => 'Email tidak valid'
+            'max' => ':attribute terlalu panjang'
         ];
     }
 
@@ -46,9 +41,6 @@ class SupplierUpdateRequest extends FormRequest
     {
         return [
             'name' => 'Nama',
-            'phone' => 'No. Telepon',
-            'email' => 'Email',
-            'address' => 'Alamat',
             'description' => 'Deskripsi'
         ];
     }

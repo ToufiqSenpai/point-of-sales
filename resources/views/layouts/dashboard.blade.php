@@ -63,6 +63,50 @@
             </li>
             <li>
                 <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
+                    <span class="material-icons sidebar">inventory_2</span>
+                    <span class="ml-3">Product</span>
+                </button>
+                <ul class="space-y-1 max-h-0 overflow-hidden duration-300 mt-1  ">
+                    <li>
+                        <a href="/product" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>List Product</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/product/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Tambah Produk</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/product/category" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>List Category</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/product/category/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Tambah Category</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/product/unit" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>List Unit</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/product/unit/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Tambah Unit</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
                     <span class="material-icons sidebar">person</span>
                     <span class="ml-3">User</span>
                 </button>
@@ -87,24 +131,13 @@
         <h2 class="font-medium text-xl">@yield('title')</h2>
     </nav>
     <main class="w-full max-w-[calc(100%-240px)] mt-14 ml-auto max-ipad:px-4 min-ipad:px-8 relative">
+        @if(session()->has('success'))
+            <x-alert type="success">{{ session('success') }}</x-alert>
+        @endif
+            @if(session()->has('error'))
+                <x-alert type="error">{{ session('error') }}</x-alert>
+            @endif
         @yield('main')
     </main>
 </body>
-<script>
-    // const accordion = document.getElementById('button')
-    // // const hoho = document.getElementById('panel')
-    //
-    // accordion.addEventListener('click', function(e) {
-    //     e.preventDefault()
-    //     const panel = this.nextElementSibling;
-    //
-    //     // hoho.classList.remove('hidden')
-    //     // hoho.classList.add('block')
-    //     if (panel.style.maxHeight) {
-    //         panel.style.maxHeight = null;
-    //     } else {
-    //         panel.style.maxHeight = panel.scrollHeight + "px";
-    //     }
-    // })
-</script>
 </html>
