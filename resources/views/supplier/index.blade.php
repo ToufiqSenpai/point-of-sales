@@ -72,7 +72,7 @@
                             <button class="text-sm hover:underline table-delete-btn">
                                 <span class="material-icons table-action bg-red-500 p-1 rounded text-white">delete</span>
                             </button>
-                            <x-modal.delete description="Apakah anda ingin menghapus {{ $supplier['name'] }}" action="/user" id="{{ $supplier['id'] }}" />
+                            <x-modal.delete description="Apakah anda ingin menghapus {{ $supplier['name'] }}" action="/supplier" id="{{ $supplier['id'] }}" />
                         </td>
                     </tr>
                 @endforeach
