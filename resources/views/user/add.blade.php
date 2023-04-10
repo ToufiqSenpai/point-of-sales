@@ -3,7 +3,7 @@
 @section('title', 'Tambah User')
 
 @section('main')
-    <form class="bg-white rounded-md p-3 grid grid-cols-2 max-ipad:grid-cols-1 gap-2 shadow-1" action="/user/create" method="POST">
+    <form class="bg-white rounded-md p-3 grid grid-cols-2 max-ipad:grid-cols-1 gap-2 shadow-1" action="/user/add" method="POST">
         @csrf
         <div>
             <div>

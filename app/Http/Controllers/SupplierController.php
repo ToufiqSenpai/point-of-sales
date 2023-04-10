@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SupplierStoreRequest;
+use App\Http\Requests\SupplierUpdateRequest;
 use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -45,17 +47,9 @@ class SupplierController extends Controller
         return view('supplier.add');
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(SupplierStoreRequest $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), $this->rules, $this->validate_message);
-
-        if($validator->fails()) {
-            return redirect('/supplier/add')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
-        $supplier = new Supplier($validator->getData());
+        $supplier = new Supplier($request->all());
         $supplier->save();
 
         return redirect('/supplier')->with([
@@ -70,19 +64,11 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(SupplierUpdateRequest $request): RedirectResponse
     {
         $body = $request->all();
-        $validator = Validator::make($body, $this->rules, $this->validate_message);
-
-        if($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $supplier = Supplier::find($body['id']);
-        unset($body['id']);
+
         $supplier->update($body);
 
         return redirect('/supplier')->with([

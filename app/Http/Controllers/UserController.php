@@ -11,12 +11,6 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    private array $validate_message =  [
-        'required' => 'Harus diisi',
-        'unique' => ':attribute sudah tersedia',
-        'max' => ':attribute terlalu panjang'
-    ];
-
     public function index(Request $request): View
     {
         $search = $request->query->get('search');
@@ -69,10 +63,8 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request): RedirectResponse
     {
-        $body = $request->body;
+        $body = $request->all();
         $user = User::find($body['id']);
-
-        unset($body['id']);
 
         $user->update($body);
 

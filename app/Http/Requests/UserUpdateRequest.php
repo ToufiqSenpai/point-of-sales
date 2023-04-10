@@ -13,7 +13,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'id' => 'required',
             'name' => 'required|max:255',
-            'username' => 'required|max:20|unique:users,username'. $this->get('id'),
+            'username' => 'required|max:20|unique:users,username,'. $this->get('id'),
             'email' => 'nullable|email:rfc,dns|unique:users,email,'. $this->get('id'),
             'phone' => 'nullable|unique:users,phone,'. $this->get('id'),
             'role' => [new Enum(UserRole::class), 'required']

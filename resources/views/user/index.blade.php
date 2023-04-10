@@ -79,7 +79,7 @@
                 </tbody>
             </table>
             <nav class="flex items-center justify-between py-4 px-6" aria-label="Table navigation">
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $users->total() }}</span></span>
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $users->firstItem() }}-{{ $users->lastItem() }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $users->total() }}</span></span>
                 <div class="flex gap-4">
                     <a href="{{ $users->previousPageUrl() }}">
                         <span class="material-icons cursor-pointer">navigate_before</span>
