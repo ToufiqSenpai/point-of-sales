@@ -66,7 +66,7 @@ class SupplierController extends Controller
     public function edit(Request $request, string $id): View
     {
         return view('supplier.edit', [
-            'user' => Supplier::find($id)
+            'supplier' => Supplier::find($id)
         ]);
     }
 

@@ -36,6 +36,8 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/supplier/edit/{id}', [SupplierController::class, 'edit']);
     Route::put('/supplier/edit', [SupplierController::class, 'update']);
     Route::delete('/supplier', [SupplierController::class, 'destroy']);
+
+
 });
 
 Route::middleware('auth:OWNER')->group(function () {

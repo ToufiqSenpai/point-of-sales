@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('Title', 'List Supplier')
+@section('title', 'List Supplier')
 
 @section('main')
     <div class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
@@ -66,7 +66,7 @@
                             {{ $supplier['description'] }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="/user/edit/{{ $supplier['id'] }}" class="text-sm hover:underline">
+                            <a href="/supplier/edit/{{ $supplier['id'] }}" class="text-sm hover:underline">
                                 <span class="material-icons table-action bg-blue-500 p-1 rounded text-white">edit</span>
                             </a>
                             <button class="text-sm hover:underline table-delete-btn">
