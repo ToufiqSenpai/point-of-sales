@@ -8,7 +8,7 @@
             <x-alert type="success">{{ session('success') }}</x-alert>
         @endif
         <div class="flex justify-end">
-            <a href="/user/create" class="bg-green-500 text-white px-3 py-1 rounded-md font-medium ml-auto">Tambah User</a>
+            <a href="/user/add" class="bg-green-500 text-white px-3 py-1 rounded-md font-medium ml-auto">Tambah User</a>
         </div>
         <form class="flex items-center mt-3">
             <label for="simple-search" class="sr-only">Search</label>

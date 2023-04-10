@@ -45,8 +45,8 @@ Route::middleware('auth:OWNER')->group(function () {
     // User route endpoint
     Route::get('/user', [UserController::class, 'index']);
     Route::delete('/user', [UserController::class, 'destroy']);
-    Route::get('/user/create', [UserController::class, 'create']);
-    Route::post('/user/create', [UserController::class, 'store']);
+    Route::get('/user/add', [UserController::class, 'add']);
+    Route::post('/user/add', [UserController::class, 'store']);
     Route::get('/user/edit/{id}', [UserController::class, 'edit']);
     Route::put('/user/edit', [UserController::class, 'update']);
 });

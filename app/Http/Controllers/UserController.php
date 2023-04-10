@@ -31,9 +31,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function create(): View
+    public function add(): View
     {
-        return view('user.create');
+        return view('user.add');
     }
     public function store(UserStoreRequest $req): RedirectResponse
     {
