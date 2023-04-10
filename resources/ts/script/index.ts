@@ -1,3 +1,3 @@
 import './dashboard'
-import './user/index'
+import './components/table-data'
 import './components/alert'

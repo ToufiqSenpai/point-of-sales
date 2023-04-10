@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
-class UserStoreRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,21 +24,12 @@ class UserStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'required',
             'name' => 'required|max:255',
-            'username' => 'required|unique:users|max:20',
-            'password' => 'required|max:50',
-            'email' => 'nullable|email:rfc,dns|unique:users',
-            'phone' => 'nullable|unique:users'
-        ];
-    }
-
-    public function messages(): array
-    {
-        return [
-            'required' => 'Harus diisi',
-            'unique' => ':attribute sudah tersedia',
-            'max' => ':attribute terlalu panjang',
-            'email' => 'Email tidak valid'
+            'username' => 'required|max:20|unique:users,username'. $this->get('id'),
+            'email' => 'nullable|email:rfc,dns|unique:users,email,'. $this->get('id'),
+            'phone' => 'nullable|unique:users,phone,'. $this->get('id'),
+            'role' => [new Enum(UserRole::class), 'required']
         ];
     }
 
@@ -45,9 +38,9 @@ class UserStoreRequest extends FormRequest
         return [
             'name' => 'Nama',
             'username' => 'Username',
-            'password' => 'Password',
             'email' => 'Email',
-            'phone' => 'No. Telepon'
+            'phone' => 'No. Telepon',
+            'role' => 'Role'
         ];
     }
 }

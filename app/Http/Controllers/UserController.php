@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRole;
+use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -36,27 +35,12 @@ class UserController extends Controller
     {
         return view('user.create');
     }
-    public function store(Request $req): RedirectResponse
+    public function store(UserStoreRequest $req): RedirectResponse
     {
-        $rules = [
-            'name' => 'required|unique:users|max:255',
-            'username' => 'required|unique:users|max:20',
-            'password' => 'required|max:50',
-            'email' => 'nullable|email:rfc,dns',
-            'phone' => 'nullable'
-        ];
+        $body = $req->all();
+        $body['password'] = bcrypt($body['password']);
 
-        $validator = Validator::make($req->all(), $rules, $this->validate_message);
-
-        if ($validator->fails()) {
-            return redirect('/user/create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-        $user_data = $validator->getData();
-        $user_data['password'] = bcrypt($user_data['password']);
-
-        $user = new User($user_data);
+        $user = new User($body);
         $user->save();
 
         return redirect('/user')->with([
@@ -83,31 +67,14 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(UserUpdateRequest $request): RedirectResponse
     {
-        $rules = [
-            'id' => 'required',
-            'name' => 'required|max:255',
-            'username' => 'required|max:20',
-            'email' => 'nullable|email:rfc,dns',
-            'phone' => 'nullable',
-            'role' => [new Enum(UserRole::class), 'required']
-        ];
+        $body = $request->body;
+        $user = User::find($body['id']);
 
-        $validator = Validator::make($request->all(), $rules, $this->validate_message);
-        if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
-        }
+        unset($body['id']);
 
-        $data = $validator->getData();
-
-        $user = User::find($data['id']);
-
-        unset($data['id']);
-
-        $user->update($data);
+        $user->update($body);
 
         return redirect('/user')->with(['success' => 'User ' . $user['username'] . ' berhasil diubah']);
     }

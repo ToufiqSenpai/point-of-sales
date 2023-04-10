@@ -78,12 +78,13 @@
                 @endforeach
                 </tbody>
             </table>
-            <nav class="flex items-center justify-between py-4 px-6" aria-label="Table navigation">
-{{--                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $users->total() }}</span></span>--}}
+            <nav class="flex items-center justify-between py-4 px-6 w-full" aria-label="Table navigation">
+                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">{{ $suppliers->firstItem() }}-{{ $suppliers->lastItem() }}</span> of <span class="font-semibold text-gray-900 dark:text-white">{{ $suppliers->total() }}</span></span>
                 <div class="flex gap-4">
                     <a href="">
                         <span class="material-icons cursor-pointer">navigate_before</span>
                     </a>
+                    <p>{{ $suppliers->currentPage() }}</p>
                     <a href="">
                         <span class="material-icons cursor-pointer">navigate_next</span>
                     </a>
