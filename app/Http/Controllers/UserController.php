@@ -96,7 +96,6 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $this->validate_message);
         if ($validator->fails()) {
-            dd($validator, $request->get('role'));
             return back()
                 ->withErrors($validator)
                 ->withInput();

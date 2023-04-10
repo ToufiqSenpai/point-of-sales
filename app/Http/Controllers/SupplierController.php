@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -60,5 +61,49 @@ class SupplierController extends Controller
         return redirect('/supplier')->with([
             'success' => 'Supplier telah ditambahkan'
         ]);
+    }
+
+    public function edit(Request $request, string $id): View
+    {
+        return view('supplier.edit', [
+            'user' => Supplier::find($id)
+        ]);
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        $body = $request->all();
+        $validator = Validator::make($body, $this->rules, $this->validate_message);
+
+        if($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $supplier = Supplier::find($body['id']);
+        unset($body['id']);
+        $supplier->update($body);
+
+        return redirect('/supplier')->with([
+            'success' => "Supplier ". $supplier['name'] . " berhasil diubah"
+        ]);
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $supplier = Supplier::find($request->get('id'));
+
+        if($supplier) {
+            $supplier->delete();
+
+            return redirect('/supplier')->with([
+                'success' => 'Supplier '. $supplier->name .' berhasil dihapus'
+            ]);
+        } else {
+            return redirect('/supplier')->with([
+                'error' => 'Supplier not found'
+            ]);
+        }
     }
 }

@@ -32,6 +32,10 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
 //    Supplier endpoint
     Route::get('/supplier', [SupplierController::class, 'index']);
     Route::get('/supplier/add', [SupplierController::class, 'add']);
+    Route::post('/supplier/add', [SupplierController::class, 'store']);
+    Route::get('/supplier/edit/{id}', [SupplierController::class, 'edit']);
+    Route::put('/supplier/edit', [SupplierController::class, 'update']);
+    Route::delete('/supplier', [SupplierController::class, 'destroy']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {
