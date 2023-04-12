@@ -27,7 +27,14 @@ return new class extends Migration
         Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('product_brands', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
 
@@ -57,6 +64,7 @@ return new class extends Migration
             $table->integer('stock');
             $table->foreignId('category_id')->constrained('product_categories')->onDelete('cascade');
             $table->foreignId('unit_id')->constrained('product_units')->onDelete('cascade');
+            $table->foreignId('brand_id')->constrained('product_brands')->onDelete('cascade');
             $table->foreignId('image_id')->constrained('product_images')->onDelete('cascade');
             $table->timestamps();
         });
@@ -133,6 +141,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('product_categories');
+        Schema::dropIfExists('product_brands');
         Schema::dropIfExists('product_images');
         Schema::dropIfExists('product_units');
         Schema::dropIfExists('products');

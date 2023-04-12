@@ -74,33 +74,21 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/product/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
-                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>Tambah Produk</p>
-                        </a>
-                    </li>
-                    <li>
                         <a href="/product/category" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
                             <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>List Category</p>
+                            <p>Category</p>
                         </a>
                     </li>
                     <li>
-                        <a href="/product/category/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                        <a href="/product/brand" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
                             <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>Tambah Category</p>
+                            <p>Brand</p>
                         </a>
                     </li>
                     <li>
                         <a href="/product/unit" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
                             <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>List Unit</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="/product/unit/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
-                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>Tambah Unit</p>
+                            <p>Unit</p>
                         </a>
                     </li>
                 </ul>

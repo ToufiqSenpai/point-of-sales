@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductUnitController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductBrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,14 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/product/category/edit/{id}', [ProductCategoryController::class, 'edit']);
     Route::put('/product/category/edit', [ProductCategoryController::class, 'update']);
     Route::delete('/product/category', [ProductCategoryController::class, 'destroy']);
+
+//    Product brand endpoint
+    Route::get('/product/brand', [ProductBrandController::class, 'index']);
+    Route::get('/product/brand/add', [ProductBrandController::class, 'add']);
+    Route::post('/product/brand/add', [ProductBrandController::class, 'store']);
+    Route::get('/product/brand/edit/{id}', [ProductBrandController::class, 'edit']);
+    Route::put('/product/brand/edit', [ProductBrandController::class, 'update']);
+    Route::delete('/product/brand', [ProductBrandController::class, 'destroy']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {

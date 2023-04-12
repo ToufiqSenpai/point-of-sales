@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'List Supplier')
+@section('title', 'List Unit Produk')
 
 @section('main')
     <div class="bg-white rounded-md w-full p-3 min-h-full shadow-1">

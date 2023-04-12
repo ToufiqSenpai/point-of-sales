@@ -62,13 +62,13 @@ class ProductCategoryController extends Controller
 
     public function destroy(Request $request): RedirectResponse
     {
-        $product_categories = ProductCategory::find($request->get('id'));
+        $product_category = ProductCategory::find($request->get('id'));
 
-        if($product_categories) {
-            $product_categories->delete();
+        if($product_category) {
+            $product_category->delete();
 
             return redirect('/product/category')->with([
-                'success' => 'Kategori produk '. $product_categories->name .' berhasil dihapus'
+                'success' => 'Kategori produk '. $product_category->name .' berhasil dihapus'
             ]);
         } else {
             return redirect('/product/category')->with([
