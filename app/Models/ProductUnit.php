@@ -9,7 +9,7 @@ class ProductUnit extends Model
 {
     use HasFactory;
 
-    protected $table = 'product_units';
+    protected $table = 'product_unit';
 
     protected $fillable = [
         'name',

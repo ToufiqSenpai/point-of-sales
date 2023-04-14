@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('username')->unique();
@@ -24,21 +24,21 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('product_categories', function (Blueprint $table) {
+        Schema::create('product_category', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('product_brands', function (Blueprint $table) {
+        Schema::create('product_brand', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('product_images', function (Blueprint $table) {
+        Schema::create('product_image', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('path');
@@ -47,29 +47,31 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('product_units', function (Blueprint $table) {
+        Schema::create('product_unit', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
         });
 
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('product', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
+            $table->string('barcode');
+            $table->string('sku');
             $table->bigInteger('base_price');
-            $table->bigInteger('sell_price');
-            $table->integer('sold');
-            $table->integer('stock');
-            $table->foreignId('category_id')->constrained('product_categories')->onDelete('cascade');
-            $table->foreignId('unit_id')->constrained('product_units')->onDelete('cascade');
-            $table->foreignId('brand_id')->constrained('product_brands')->onDelete('cascade');
-            $table->foreignId('image_id')->constrained('product_images')->onDelete('cascade');
+            $table->bigInteger('selling_price');
+            $table->integer('sold')->default(0);
+            $table->integer('stock')->default(0);
+            $table->foreignId('category_id')->constrained('product_category')->onDelete('cascade');
+            $table->foreignId('unit_id')->constrained('product_unit')->onDelete('cascade');
+            $table->foreignId('brand_id')->constrained('product_brand')->onDelete('cascade');
+            $table->foreignId('image_id')->nullable()->constrained('product_image')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
 
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::create('supplier', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
@@ -79,24 +81,24 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('incoming_stocks', function (Blueprint $table) {
+        Schema::create('incoming_stock', function (Blueprint $table) {
             $table->id();
             $table->text('description');
             $table->integer('amount');
-            $table->foreignId('supplier_id')->constrained('suppliers')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('supplier_id')->constrained('supplier')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('outgoing_stocks', function (Blueprint $table) {
+        Schema::create('outgoing_stock', function (Blueprint $table) {
             $table->id();
             $table->text('description');
             $table->integer('amount');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('customer', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('address');
@@ -105,17 +107,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('transaction', function (Blueprint $table) {
             $table->id();
             $table->integer('discount');
             $table->integer('tax');
             $table->bigInteger('shipping');
-            $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('cashier_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('customer_id')->constrained('customer')->onDelete('cascade');
+            $table->foreignId('cashier_id')->constrained('user')->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('transaction_products', function (Blueprint $table) {
+        Schema::create('transaction_product', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
             $table->integer('discount');

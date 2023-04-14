@@ -10,6 +10,7 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ProductUnitController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductBrandController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,11 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/product/brand/edit/{id}', [ProductBrandController::class, 'edit']);
     Route::put('/product/brand/edit', [ProductBrandController::class, 'update']);
     Route::delete('/product/brand', [ProductBrandController::class, 'destroy']);
+
+//    Product endpoint
+    Route::get('/product', [ProductController::class, 'index']);
+    Route::get('/product/add', [ProductController::class, 'add']);
+    Route::post('/product/add', [ProductController::class, 'store']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {

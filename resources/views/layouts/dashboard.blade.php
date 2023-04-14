@@ -74,15 +74,15 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/product/category" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
-                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>Category</p>
-                        </a>
-                    </li>
-                    <li>
                         <a href="/product/brand" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
                             <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
                             <p>Brand</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/product/category" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Category</p>
                         </a>
                     </li>
                     <li>
