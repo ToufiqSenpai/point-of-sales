@@ -23,7 +23,7 @@ class ProductUnitUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required',
-            'name' => 'required|max:99|unique:product_units,name,'. $this->get('id'),
+            'name' => 'required|max:99|unique:product_unit,name,'. $this->get('id'),
             'description' => 'nullable|max:10000'
         ];
     }

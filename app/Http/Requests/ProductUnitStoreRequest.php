@@ -22,7 +22,7 @@ class ProductUnitStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:99|unique:product_units',
+            'name' => 'required|max:99|unique:product_unit',
             'description' => 'nullable|max:10000'
         ];
     }

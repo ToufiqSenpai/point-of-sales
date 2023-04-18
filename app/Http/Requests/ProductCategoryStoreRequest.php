@@ -22,7 +22,7 @@ class ProductCategoryStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:99|unique:product_categories',
+            'name' => 'required|max:99|unique:product_category',
             'description' => 'nullable|max:10000'
         ];
     }

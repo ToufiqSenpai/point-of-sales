@@ -24,9 +24,9 @@ class SupplierUpdateRequest extends FormRequest
         $id = $this->get('id');
         return [
             'id' => 'required',
-            'name' => 'required|max:155|unique:suppliers,name,'. $id,
-            'phone' => 'required|max:50|unique:suppliers,phone,'. $id,
-            'email' => 'nullable|email:rfc,dns|unique:suppliers,email,'. $id,
+            'name' => 'required|max:155|unique:supplier,name,'. $id,
+            'phone' => 'required|max:50|unique:supplier,phone,'. $id,
+            'email' => 'nullable|email:rfc,dns|unique:supplier,email,'. $id,
             'address' => 'nullable|max:10000',
             'description' => 'nullable|max:10000'
         ];

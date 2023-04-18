@@ -22,7 +22,7 @@ class SupplierStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:155|unique:suppliers',
+            'name' => 'required|max:155|unique:supplier',
             'phone' => 'required|unique:suppliers|max:50',
             'email' => 'nullable|unique:suppliers|email:rfc,dns',
             'address' => 'nullable|max:10000',

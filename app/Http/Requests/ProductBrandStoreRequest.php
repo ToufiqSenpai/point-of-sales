@@ -22,7 +22,7 @@ class ProductBrandStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:99|unique:product_brands',
+            'name' => 'required|max:99|unique:product_brand',
             'description' => 'nullable|max:10000'
         ];
     }

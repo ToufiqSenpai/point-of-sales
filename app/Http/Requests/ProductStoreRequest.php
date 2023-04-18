@@ -23,14 +23,14 @@ class ProductStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:199|unique:products',
-            'barcode' => 'nullable|max:99|unique:products',
-            'sku' => 'nullable|max:12|unique:products',
+            'name' => 'required|max:199|unique:product',
+            'barcode' => 'nullable|max:99|unique:product',
+            'sku' => 'nullable|max:12|unique:product',
             'description' => 'nullable|max:20000',
             'image' => 'nullable|file|image|max:10485760',
-            'brand_id' => 'required|exists:product_brands,id',
-            'category_id' => 'required|exists:product_categories,id',
-            'unit_id' => 'required|exists:product_units,id',
+            'brand_id' => 'required|exists:product_brand,id',
+            'category_id' => 'required|exists:product_category,id',
+            'unit_id' => 'required|exists:product_unit,id',
             'base_price' => 'required|numeric|max_digits:9',
             'selling_price' => 'required|numeric|max_digits:9'
         ];

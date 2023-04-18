@@ -58,8 +58,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->string('barcode');
-            $table->string('sku');
+            $table->string('barcode')->nullable();
+            $table->string('sku')->nullable();
             $table->bigInteger('base_price');
             $table->bigInteger('selling_price');
             $table->integer('sold')->default(0);

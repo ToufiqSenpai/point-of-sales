@@ -31,6 +31,9 @@
                         Barcode
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        SKU
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Harga Dasar
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -47,29 +50,33 @@
                 <tbody>
                 @foreach($products as $product)
                     <tr class="@if($loop->index % 2 == 0) bg-white @else bg-gray-50 @endif border-b dark:bg-gray-900 dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $product['name'] }}
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex items-center">
+                            <img src="{{ $product->image ? '/storage/product/'. $product->image->name : '/storage/icons/no-pictures.png' }}" width="48" height="48" class="object-cover mr-3" />
+                            {{ $product->name }}
                         </th>
                         <td class="px-6 py-4">
-                            {{ $product['username'] }}
+                            {{ $product->barcode }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $product['email'] }}
+                            {{ $product->sku }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $product['phone'] }}
+                            {{ $product->base_price }}
                         </td>
                         <td class="px-6 py-4">
-                            {{ $product['role'] }}
+                            {{ $product->selling_price }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ $product->stock }}
                         </td>
                         <td class="px-6 py-4 flex gap-1">
-                            <a href="/user/edit/{{ $product['id'] }}" class="text-sm hover:underline">
+                            <a href="/product/edit/{{ $product->id }}" class="text-sm hover:underline">
                                 <span class="material-icons table-action bg-blue-500 p-1 rounded text-white">edit</span>
                             </a>
                             <button class="text-sm hover:underline table-delete-btn">
                                 <span class="material-icons table-action bg-red-500 p-1 rounded text-white">delete</span>
                             </button>
-                            <x-modal.delete description="Apakah anda ingin menghapus {{ $product['name'] }}" action="/user" id="{{ $product['id'] }}" />
+                            <x-modal.delete description="Apakah anda ingin menghapus {{ $product->name }}" action="/product" id="{{ $product->id }}" />
                         </td>
                     </tr>
                 @endforeach

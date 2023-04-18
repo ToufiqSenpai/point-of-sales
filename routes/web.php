@@ -69,6 +69,7 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/product', [ProductController::class, 'index']);
     Route::get('/product/add', [ProductController::class, 'add']);
     Route::post('/product/add', [ProductController::class, 'store']);
+    Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {

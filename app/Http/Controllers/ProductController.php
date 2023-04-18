@@ -8,6 +8,7 @@ use App\Models\ProductBrand;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\ProductUnit;
+use App\Traits\ProductColumn;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,29 +17,13 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
+    use ProductColumn;
+
     public function index(Request $request): View
     {
-        $query =
-            "SELECT
-            p.name AS name,
-            p.description AS description,
-            p.barcode as barcode,
-            p.sku AS sku,
-            p.base_price AS base_price,
-            p.selling_price AS selling_price,
-            pb.name AS brand,
-            pc.name AS category,
-            pu.name AS unit,
-            pi.name AS image_name,
-            pi.path AS image_path
-            FROM product p
-            JOIN product_image pi on p.image_id = pi.id
-            JOIN product_brand pb on pb.id = p.brand_id
-            JOIN product_category pc on p.category_id = pc.id
-            JOIN product_unit pu on p.unit_id = pu.id;";
-//        dd(DB::select($query));
+//        dd(Product::paginate(10));
         return view('product.index', [
-//            'products' => DB::raw('SELECT *')
+            'products' => Product::paginate(10)
         ]);
     }
 
@@ -76,6 +61,16 @@ class ProductController extends Controller
 
         return redirect('/product')->with([
             'success' => 'Produk berhasil ditambah'
+        ]);
+    }
+
+    public function edit(string $id): View
+    {
+        return view('product.edit', [
+            'product' => Product::find($id),
+            'brands' => ProductBrand::all(),
+            'categories' => ProductCategory::all(),
+            'units' => ProductUnit::all()
         ]);
     }
 }

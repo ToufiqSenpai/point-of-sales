@@ -23,7 +23,7 @@ class ProductBrandUpdateRequest extends FormRequest
     {
         return [
             'id' => 'required',
-            'name' => 'required|max:99|unique:product_brands,name,'. $this->get('id'),
+            'name' => 'required|max:99|unique:product_brand,name,'. $this->get('id'),
             'description' => 'nullable|max:10000'
         ];
     }

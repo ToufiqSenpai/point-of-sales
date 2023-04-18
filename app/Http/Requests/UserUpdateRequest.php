@@ -26,9 +26,9 @@ class UserUpdateRequest extends FormRequest
         return [
             'id' => 'required',
             'name' => 'required|max:255',
-            'username' => 'required|max:20|unique:users,username,'. $this->get('id'),
-            'email' => 'nullable|email:rfc,dns|unique:users,email,'. $this->get('id'),
-            'phone' => 'nullable|unique:users,phone,'. $this->get('id'),
+            'username' => 'required|max:20|unique:user,username,'. $this->get('id'),
+            'email' => 'nullable|email:rfc,dns|unique:user,email,'. $this->get('id'),
+            'phone' => 'nullable|unique:user,phone,'. $this->get('id'),
             'role' => [new Enum(UserRole::class), 'required']
         ];
     }
