@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\ProductBrand;
 use App\Models\ProductCategory;
@@ -11,9 +12,9 @@ use App\Models\ProductUnit;
 use App\Traits\ProductColumn;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,6 @@ class ProductController extends Controller
 
     public function index(Request $request): View
     {
-//        dd(Product::paginate(10));
         return view('product.index', [
             'products' => Product::paginate(10)
         ]);
@@ -71,6 +71,40 @@ class ProductController extends Controller
             'brands' => ProductBrand::all(),
             'categories' => ProductCategory::all(),
             'units' => ProductUnit::all()
+        ]);
+    }
+
+    public function update(ProductUpdateRequest $request): RedirectResponse
+    {
+        $body = $request->all();
+        $image = $request->file('image');
+        $product = Product::find($body['id']);
+
+        if($image) {
+            $old_product_image = ProductImage::find($product['image_id']);
+
+            Storage::disk('public')->delete('product/'. $old_product_image->name);
+
+            $old_product_image->delete();
+            
+            $image_name = Str::uuid() .'.'. $image->extension();
+            $image->storeAs('product', $image_name, 'public');
+            $product_image = new ProductImage([
+                'name' => $image_name,
+                'path' => $image->path(),
+                'size' => $image->getSize(),
+                'mimetype' => $image->getMimeType()
+            ]);
+
+            $product_image->save();
+            $body['image_id'] = $product_image->id;
+        }
+
+        $product = Product::find($body['id']);
+        $product->update($body);
+
+        return redirect('/product')->with([
+            'success' => 'Produk '. $product->name .' berhasil diubah'
         ]);
     }
 }

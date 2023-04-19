@@ -13,6 +13,7 @@
     <form class="grid grid-cols-3 max-ipad:grid-cols-1 gap-5" action="/product/edit" method="post" enctype="multipart/form-data">
         @csrf
         @method('put')
+        <input type="hidden" name="id" value="{{ $product->id }}" />
         <section class="bg-white shadow-1 p-3 h-min input-grid-area">
             <div>
                 <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Nama *</label>
@@ -66,7 +67,7 @@
                 <select id="brand" name="brand_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                     <option selected disabled>None</option>
                     @foreach($brands as $brand)
-                        <option value="{{ $brand['id'] }}" {{ old('brand_id') == $brand['id'] ? 'selected' : '' }}>{{ $brand['name'] }}</option>
+                        <option value="{{ $brand['id'] }}" {{ old('brand_id', $product->brand_id) == $brand['id'] ? 'selected' : '' }}>{{ $brand['name'] }}</option>
                     @endforeach
                 </select>
                 @error('brand_id')
@@ -78,7 +79,7 @@
                 <select id="category" name="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                     <option selected disabled>None</option>
                     @foreach($categories as $category)
-                        <option value="{{ $category['id'] }}" {{ old('category_id') == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
+                        <option value="{{ $category['id'] }}" {{ old('category_id', $product->category_id) == $category['id'] ? 'selected' : '' }}>{{ $category['name'] }}</option>
                     @endforeach
                 </select>
                 @error('category_id')
@@ -90,7 +91,7 @@
                 <select id="unit" name="unit_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                     <option selected disabled>None</option>
                     @foreach($units as $unit)
-                        <option value="{{ $unit['id'] }}" {{ old('unit_id') == $unit['id'] ? 'selected' : '' }}>{{ $unit['name'] }}</option>
+                        <option value="{{ $unit['id'] }}" {{ old('unit_id', $product->unit_id) == $unit['id'] ? 'selected' : '' }}>{{ $unit['name'] }}</option>
                     @endforeach
                 </select>
                 @error('unit_id')
@@ -101,14 +102,14 @@
         <section class="bg-white shadow-1 p-3 h-min">
             <div>
                 <label for="base_price" class="block mb-1 text-sm font-medium text-gray-900">Harga Dasar *</label>
-                <input type="number" id="base_price" name="base_price" value="{{ old('base_price') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                <input type="number" id="base_price" name="base_price" value="{{ old('base_price', $product->base_price) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 @error('base_price')
                 <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-2">
                 <label for="selling_price" class="block mb-1 text-sm font-medium text-gray-900">Harga Jual *</label>
-                <input type="number" id="selling_price" name="selling_price" value="{{ old('selling_price') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                <input type="number" id="selling_price" name="selling_price" value="{{ old('selling_price', $product->selling_price) }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                 @error('selling_price')
                 <p class="mt-0.5 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
                 @enderror
