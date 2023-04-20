@@ -22,8 +22,15 @@ class ProductController extends Controller
 
     public function index(Request $request): View
     {
-        return view('product.index', [
-            'products' => Product::paginate(10)
+        $search = $request->query->get('search');
+        $products = Product::latest();
+
+        if($search) {
+            $products->where('name', 'like', "%$search%");
+        }
+
+        return view('product.unit.index', [
+            'units' => $products->paginate(10)
         ]);
     }
 

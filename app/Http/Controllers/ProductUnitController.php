@@ -41,7 +41,7 @@ class ProductUnitController extends Controller
         ]);
     }
 
-    public function edit(Request $request, string $id): View
+    public function edit(string $id): View
     {
         return view('product.unit.edit', [
             'unit' => ProductUnit::find($id)
