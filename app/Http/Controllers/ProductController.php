@@ -29,8 +29,8 @@ class ProductController extends Controller
             $products->where('name', 'like', "%$search%");
         }
 
-        return view('product.unit.index', [
-            'units' => $products->paginate(10)
+        return view('product.index', [
+            'products' => $products->paginate(10)
         ]);
     }
 
