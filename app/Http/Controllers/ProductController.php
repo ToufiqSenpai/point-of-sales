@@ -107,4 +107,26 @@ class ProductController extends Controller
             'success' => 'Produk '. $product->name .' berhasil diubah'
         ]);
     }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $product = Product::find($request->get('id'));
+
+        if($product) {
+            $product_image = ProductImage::find($product->image_id);
+
+            Storage::disk('public')->delete('product/'. $product_image->name);
+
+            $product_image->delete();
+            $product->delete();
+
+            return redirect('/product/unit')->with([
+                'success' => 'Unit produk '. $product->name .' berhasil dihapus'
+            ]);
+        } else {
+            return redirect('/product/unit')->with([
+                'error' => 'Product unit not found'
+            ]);
+        }
+    }
 }

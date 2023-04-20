@@ -71,6 +71,7 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::post('/product/add', [ProductController::class, 'store']);
     Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
     Route::put('/product/edit', [ProductController::class, 'update']);
+    Route::delete('/product', [ProductController::class, 'destroy']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {
