@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Tambah Supplier')
+@section('title', 'Tambah Customer')
 
 @section('main')
-    <form class="grid grid-cols-2 max-ipad:grid-cols-1 gap-3" action="/supplier/add" method="POST">
+    <form class="grid grid-cols-2 max-ipad:grid-cols-1 gap-3" action="/customer/add" method="POST">
         @csrf
         <div class="bg-white rounded-md p-3 shadow-1 h-max">
             <div>

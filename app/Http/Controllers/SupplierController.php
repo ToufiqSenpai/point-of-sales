@@ -13,21 +13,6 @@ use Illuminate\View\View;
 
 class SupplierController extends Controller
 {
-    private array $rules = [
-        'name' => 'required|max:155',
-        'phone' => 'required|unique:suppliers|max:50',
-        'email' => 'nullable|unique:suppliers|email:rfc,dns',
-        'address' => 'nullable|max:10000',
-        'description' => 'nullable|max:10000'
-    ];
-
-    private array $validate_message =  [
-        'required' => 'Harus diisi',
-        'unique' => ':attribute sudah tersedia',
-        'max' => ':attribute terlalu panjang',
-        'email' => 'Email tidak valid'
-    ];
-
     public function index(Request $request): View
     {
         $search = $request->query->get('search');

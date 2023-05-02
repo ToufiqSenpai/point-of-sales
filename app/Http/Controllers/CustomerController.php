@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerStoreRequest;
+use App\Http\Requests\CustomerUpdateRequest;
 use App\Models\Customer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -46,8 +47,30 @@ class CustomerController extends Controller
         ]);
     }
 
-    public function update(): RedirectResponse
+    public function update(CustomerUpdateRequest $request): RedirectResponse
     {
-        
+        $body = $request->all();
+        $customer = Customer::find($body['id']);
+
+        $customer->update($body);
+
+        return redirect('/customer')->with('success', 'Customer '. $customer->name .' berhasil diupdate');
+    }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $customer = Customer::find($request->get('id'));
+
+        if($customer) {
+            $customer->delete();
+
+            return redirect('/customer')->with([
+                'success' => 'Customer '. $customer->name .' berhasil dihapus'
+            ]);
+        } else {
+            return redirect('/customer')->with([
+                'error' => 'Customer not found'
+            ]);
+        }
     }
 }

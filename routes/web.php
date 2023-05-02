@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\IndexController;
@@ -72,6 +73,14 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/product/edit/{id}', [ProductController::class, 'edit']);
     Route::put('/product/edit', [ProductController::class, 'update']);
     Route::delete('/product', [ProductController::class, 'destroy']);
+
+    // Customer endpoint
+    Route::get('/customer', [CustomerController::class, 'index']);
+    Route::get('/customer/add', [CustomerController::class, 'add']);
+    Route::post('/customer/add', [CustomerController::class, 'store']);
+    Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
+    Route::put('/customer/edit', [CustomerController::class, 'update']);
+    Route::delete('/customer', [CustomerController::class, 'destroy']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {

@@ -64,10 +64,11 @@ return new class extends Migration
             $table->bigInteger('selling_price');
             $table->integer('sold')->default(0);
             $table->integer('stock')->default(0);
-            $table->foreignId('category_id')->constrained('product_category')->onDelete('cascade');
-            $table->foreignId('unit_id')->constrained('product_unit')->onDelete('cascade');
-            $table->foreignId('brand_id')->constrained('product_brand')->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained('product_category')->onDelete('set null');
+            $table->foreignId('unit_id')->nullable()->constrained('product_unit')->onDelete('set null');
+            $table->foreignId('brand_id')->nullable()->constrained('product_brand')->onDelete('set null');
             $table->foreignId('image_id')->nullable()->constrained('product_image')->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -78,15 +79,6 @@ return new class extends Migration
             $table->text('address');
             $table->string('phone')->unique();
             $table->string('email')->unique()->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('incoming_stock', function (Blueprint $table) {
-            $table->id();
-            $table->text('description');
-            $table->integer('amount');
-            $table->foreignId('supplier_id')->constrained('supplier')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -104,6 +96,25 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone')->unique();
             $table->string('email')->unique()->nullable();
+            $table->text('description')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('purchase_order', function (Blueprint $table) {
+            $table->id();
+            $table->integer('discount');
+            $table->integer('tax');
+            $table->bigInteger('shipping');
+            $table->foreignId('supplier_id')->nullable()->constrained('supplier')->onDelete('set null');
+            $table->timestamps();
+        });
+
+        Schema::create('purchase_order_product', function (Blueprint $table) {
+            $table->id();
+            $table->integer('amount');
+            $table->integer('discount');
+            $table->foreignId('product_id')->constrained('product')->onDelete('no action');
+            $table->foreignId('purchase_order_id')->constrained('purchase_order');
             $table->timestamps();
         });
 

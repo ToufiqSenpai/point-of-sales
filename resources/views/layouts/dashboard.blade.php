@@ -43,6 +43,26 @@
             </li>
             <li>
                 <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
+                    <span class="material-icons sidebar">groups</span>
+                    <span class="ml-3">Customer</span>
+                </button>
+                <ul class="space-y-1 max-h-0 overflow-hidden duration-300 mt-1  ">
+                    <li>
+                        <a href="/customer" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>List</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/customer/add" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Tambah Customer</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
                     <span class="material-icons sidebar">local_shipping</span>
                     <span class="ml-3">Supplier</span>
                 </button>
