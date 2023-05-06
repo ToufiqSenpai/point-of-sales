@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductUnitController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,9 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/customer/edit/{id}', [CustomerController::class, 'edit']);
     Route::put('/customer/edit', [CustomerController::class, 'update']);
     Route::delete('/customer', [CustomerController::class, 'destroy']);
+
+    // Purchase order endpoint
+    Route::get('/transaction/purchase-order', [PurchaseOrderController::class, 'index']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {

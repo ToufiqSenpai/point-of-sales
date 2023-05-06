@@ -28,9 +28,9 @@
                 </button>
                 <ul class="space-y-1 max-h-0 overflow-hidden duration-300 mt-1  ">
                     <li>
-                        <a href="/transaction" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                        <a href="/transaction/purchase-order" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
                             <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
-                            <p>Buat Transaksi</p>
+                            <p>Purchase Order</p>
                         </a>
                     </li>
                     <li>

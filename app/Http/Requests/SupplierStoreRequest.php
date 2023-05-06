@@ -23,8 +23,8 @@ class SupplierStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|max:155|unique:supplier',
-            'phone' => 'required|unique:suppliers|max:50',
-            'email' => 'nullable|unique:suppliers|email:rfc,dns',
+            'phone' => 'required|unique:supplier|max:50',
+            'email' => 'nullable|unique:supplier|email:rfc,dns',
             'address' => 'nullable|max:10000',
             'description' => 'nullable|max:10000'
         ];
