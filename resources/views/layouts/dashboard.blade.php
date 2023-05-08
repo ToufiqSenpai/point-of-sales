@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>@yield('title')</title>
-    @vite(['resources/css/app.css', 'resources/ts/app.ts'])
+    @vite(['resources/css/app.css', 'resources/ts/script/dashboard.ts', 'resources/ts/script/components/index.ts'])
 </head>
 <body>
     <aside class="fixed top-0 left-0 bottom-0 w-[240px] h-screen bg-white border-r border-solid border-[rgba(0, 0, 0, 0.12)] p-3 overflow-y-auto">

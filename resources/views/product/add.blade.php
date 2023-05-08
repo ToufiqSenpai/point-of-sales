@@ -3,6 +3,7 @@
 @section('title', 'Tambah Produk')
 
 @section('main')
+    @vite(['resources/ts/script/product/index.ts'])
     <style>
         @media screen and (min-width: 600px) {
             .input-grid-area {
