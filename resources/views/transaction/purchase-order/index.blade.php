@@ -67,18 +67,18 @@
                             <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 fixed option-dropdown" style="display: none">
                                 <ul class="py-2 text-sm text-gray-700">
                                   <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Quantity</a>
+                                    <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Quantity</span>
                                   </li>
                                   <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Discount</a>
+                                    <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Discount</span>
                                   </li>
                                   <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100">Delete</a>
+                                    <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</span>
                                   </li>
                                 </ul>
                             </div>
-                            <x-modal.input title="Quantity" class="modal-quantity" />
-                            <x-modal.input title="Discount" class="modal-discount" />
+                            <x-modal.input title="Quantity" />
+                            <x-modal.input title="Discount" />
                         </td>
                     </tr>
                 </tbody>
