@@ -1,4 +1,4 @@
-import ModalDelete from "../../../components/ModalDelete"
+// import ModalDelete from "../../../components/ModalDelete"
 import ModalInput from "../../../components/ModalInput"
 
 // Date section
@@ -16,7 +16,13 @@ for(const optionContainer of optionContainers) {
   const modalDiscount = new ModalInput(optionContainer.getElementsByClassName('modal-discount')[0])
   const modalQuantity = new ModalInput(optionContainer.getElementsByClassName('modal-quantity')[0])
 
+  const menuDropdown = (optionContainer.children[1] as HTMLElement)
+
   optionContainer.firstElementChild.addEventListener('click', e => {
-    
+    if(menuDropdown.style.display == 'none') {
+      menuDropdown.style.display = 'block'
+    } else {
+      menuDropdown.style.display = 'none'
+    }
   })
 }
