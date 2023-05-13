@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -13,7 +14,8 @@ class PurchaseOrderController extends Controller
     {
         return view('transaction.purchase-order.index', [
             'suppliers' => Supplier::all(),
-            'products' => json_encode(Product::all())
+            'products' => json_encode(Product::all()),
+            'product_image' => json_encode(ProductImage::all())
         ]);
     }
 }

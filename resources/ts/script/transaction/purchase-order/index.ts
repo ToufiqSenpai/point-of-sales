@@ -1,6 +1,13 @@
-// import ModalDelete from "../../../components/ModalDelete"
 import ModalInput from "../../../components/ModalInput"
+import Product from "../../../types/product/Product"
+import ProductCart from "../../../types/product/ProductCart"
 import clickOutsideCloser from "../../../utils/clickOutsideCloser"
+
+// Product data section
+const productData = document.getElementById('__product-data')
+const products: Product[] = JSON.parse(productData.getAttribute('data-product'))
+const productImage: ProductImage[] = JSON.parse(productData.getAttribute('data-image'))
+const cart: ProductCart[] = []
 
 // Date section
 const transactionDate = document.getElementById('transaction-date')
@@ -41,4 +48,51 @@ for(const optionContainer of optionContainers) {
       menuDropdown.style.display = 'none'
     }
   })
+}
+
+// Select product section
+const selectProduct = document.getElementById('select-product')
+const searchProductInput = selectProduct.children[0]
+const productContainer = selectProduct.children[1]
+
+for(const product of products) {
+  productContainer.appendChild(appendProductFigure(product))
+}
+
+function appendProductFigure(product: Product): Element {
+  const figure = document.createElement('figure')
+  const div = document.createElement('div')
+  const img = document.createElement('img')
+  const figcaption = document.createElement('figcaption')
+
+  figcaption.classList.add('truncate')
+  figcaption.innerHTML = product.name
+
+  img.src = `/storage/product/${productImage.find(value => value.id == product.image_id).name}`
+  img.alt = 'name'
+  img.classList.add('w-full', 'h-full', 'object-cover')
+
+  div.classList.add('w-[105px]', 'h-[105px]')
+  div.append(img)
+
+  figure.classList.add('w-[105px]', 'h-[105px]')
+  figure.setAttribute('data-product-id', product.id.toString())
+  figure.append(div, figcaption)
+
+  figure.addEventListener('click', () => {
+    for(const [key, item] of cart.entries()) {
+      if(item.id == product.id) {
+        cart[key].quantity++
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.base_price,
+          quantity: 1
+        })
+      }
+    }
+  })
+
+  return figure
 }
