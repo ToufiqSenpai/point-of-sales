@@ -3,7 +3,7 @@
 @section('title', 'Purchase Order')
 
 @section('main')
-    @vite('resources\ts\script\transaction\purchase-order\index.ts')
+    {{-- @vite('resources\ts\script\transaction\purchase-order\index.ts') --}}
     <style>
         @media screen and (min-width: 600px) {
             .input-grid-area {
@@ -11,7 +11,6 @@
             }
         }
     </style>
-    <div id="__product-data" data-product="{{ $products }}" data-image="{{ $product_image }}"></div>
     <div class="grid grid-cols-3 gap-3  ">
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1 input-grid-area">
             <section class="flex justify-between items-center">
@@ -59,7 +58,7 @@
                                 Silver
                             </td>
                             <td class="px-6 py-4">
-                                1
+                                <a href="/product">fwe</a>
                             </td>
                             <td class="px-6 py-4">
                                 Laptop
@@ -79,8 +78,8 @@
                                       </li>
                                     </ul>
                                 </div>
-                                <x-modal.input title="Quantity" />
-                                <x-modal.input title="Discount" />
+                                <x-modal.input title="Quantity" type="number" />
+                                <x-modal.input title="Discount" type="number" />
                             </td>
                         </tr>
                     </tbody>
@@ -95,12 +94,20 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
                 placeholder="Search product...">
             <div class="mt-2 grid grid-cols-3">
-                <figure class="max-w-[105px] cursor-pointer">
-                    <div class="w-[105px] h-[105px]">
-                        <img src="/storage/product/5a95ff23-668d-45e2-a05e-f025f9c480ce.jpg" class="object-cover w-full h-full" />
-                    </div>
-                    <figcaption class="truncate">OFfwefwfwefwefwfwef</figcaption>
-                </figure>
+                @foreach ($products as $product)
+                    <figure class="max-w-[105px] cursor-pointer">
+                        <div class="w-[105px] h-[105px]">
+                            <img src="/storage/product/5a95ff23-668d-45e2-a05e-f025f9c480ce.jpg" class="object-cover w-full h-full" />
+                        </div>
+                        <div class="flex items-center mt-1 justify-evenly">
+                            <button class="h-5 w-5 bg-red-600">-</button>
+                            <input type="number" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-7 h-6 p-0.5 text-end">
+                            <button>+</button>
+                            <x-form.transaction-id />
+                        </div>
+                        <figcaption class="truncate">OFfwefwfwefwefwfwef</figcaption>
+                    </figure>
+                @endforeach
             </div>
         </section>
     </div>

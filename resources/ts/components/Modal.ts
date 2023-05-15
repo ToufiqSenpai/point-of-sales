@@ -1,18 +1,12 @@
+import ModalOptions from "../types/components/ModalOption"
+
 class Modal {
-  private modalEl: Element
-  
+  protected modalEl: Element
+
   public constructor(modalEl: Element) {
     this.modalEl = modalEl
-    
-    const btnCancel = modalEl.getElementsByClassName('btn-cancel')
-    btnCancel[0].addEventListener('click', () => this.hidden())
-
-    modalEl.addEventListener('click', e => {
-        if(e.target !== e.currentTarget) return
-        this.hidden()
-    })
   }
-  
+
   public show(): void {
     const modal = this.modalEl as HTMLElement
     modal.style.visibility = 'visible'
@@ -31,6 +25,13 @@ class Modal {
     const innerModal = this.modalEl.firstElementChild as HTMLElement
     innerModal.style.opacity = '0'
     innerModal.style.transform = 'translate(-50%,-30%)'
+  }
+
+  protected closeEventListener(): void {
+    this.modalEl.addEventListener('click', e => {
+      if (e.target !== e.currentTarget) return
+      this.hidden()
+    })
   }
 }
 

@@ -3,6 +3,19 @@ import Product from "../../../types/product/Product"
 import ProductCart from "../../../types/product/ProductCart"
 import clickOutsideCloser from "../../../utils/clickOutsideCloser"
 
+window.addEventListener('beforeunload', e => {
+  console.log('Ok');
+  
+  const msg = 'Yakin g?'
+  e.returnValue = msg
+
+  return msg
+})
+
+window.addEventListener('unload', e => {
+  console.log('Ok');
+  
+})
 // Product data section
 const productData = document.getElementById('__product-data')
 const products: Product[] = JSON.parse(productData.getAttribute('data-product'))
@@ -55,9 +68,9 @@ const selectProduct = document.getElementById('select-product')
 const searchProductInput = selectProduct.children[0]
 const productContainer = selectProduct.children[1]
 
-for(const product of products) {
-  productContainer.appendChild(appendProductFigure(product))
-}
+// for(const product of products) {
+//   productContainer.appendChild(appendProductFigure(product))
+// }
 
 function appendProductFigure(product: Product): Element {
   const figure = document.createElement('figure')
