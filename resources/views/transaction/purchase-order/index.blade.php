@@ -95,18 +95,20 @@
             </form>
             <div class="mt-2 grid grid-cols-3">
                 @foreach ($products as $product)
-                    <figure class="max-w-[105px] cursor-pointer">
+                    <form class="max-w-[105px] cursor-pointer" method="POST" action="/transaction/purchase-order?action=set_product">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <div class="w-[105px] h-[105px]">
-                            <img src="/storage/product/5a95ff23-668d-45e2-a05e-f025f9c480ce.jpg" class="object-cover w-full h-full" />
+                            <img src="/storage/product/{{ $product->image->name }}" class="object-cover w-full h-full" />
                         </div>
                         <div class="flex items-center mt-1 justify-evenly">
                             <button class="h-5 w-5 bg-red-600">-</button>
-                            <input type="number" name="quantity" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-7 h-6 p-0.5 text-end">
+                            <input type="number" name="quantity" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-7 h-6 p-0.5 text-end" required>
                             <button>+</button>
-                            <x-form.transaction-id />
                         </div>
-                        <figcaption class="truncate">OFfwefwfwefwefwfwef</figcaption>
-                    </figure>
+                        <p class="truncate">OFfwefwfwefwefwfwef</p>
+                        <button type="submit">Add</button>
+                    </form>
                 @endforeach
             </div>
         </section>

@@ -2,14 +2,14 @@
 
 namespace App\Enums;
 
-enum TransactionAction : string
+final class TransactionAction
 {
-  case ADD_PRODUCT = 'ADD_PRODUCT';
-  case DELETE_PRODUCT = 'DELETE_PRODUCT';
-  case SET_SUPPLIER = 'SET_SUPPLIER';
-  case SET_QUANTITY = 'SET_QUANTITY';
-  case SET_DISCOUNT = 'SET_DISCOUNT';
-  case SET_CUSTOMER = 'SET_CUSTOMER';
-  case SET_SHIPPING = 'SET_SHIPPING';
-  case SET_TAX = 'SET_TAX';
+  const DELETE_PRODUCT = 'delete_product';
+  const SET_PRODUCT = 'set_product';
+  const SET_SUPPLIER = 'set_supplier';
+  const SET_QUANTITY = 'set_quantity';
+  const SET_DISCOUNT = 'set_discount';
+  const SET_CUSTOMER = 'set_customer';
+  const SET_SHIPPING = 'set_shipping';
+  const SET_TAX = 'set_tax';
 }
