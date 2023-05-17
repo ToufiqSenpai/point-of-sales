@@ -5,6 +5,7 @@
         "build": "vite build"
     },
     "devDependencies": {
+        "@types/qs": "^6.9.7",
         "autoprefixer": "^10.4.14",
         "axios": "^1.1.2",
         "laravel-vite-plugin": "^0.7.2",
@@ -14,6 +15,7 @@
     },
     "dependencies": {
         "flowbite": "^1.6.4",
-        "glob": "^10.2.3"
+        "glob": "^10.2.3",
+        "qs": "^6.11.2"
     }
 }

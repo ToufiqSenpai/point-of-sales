@@ -3,7 +3,7 @@
 @section('title', 'Purchase Order')
 
 @section('main')
-    {{-- @vite('resources\ts\script\transaction\purchase-order\index.ts') --}}
+    @vite('resources\ts\script\transaction\purchase-order\index.ts')
     <style>
         @media screen and (min-width: 600px) {
             .input-grid-area {
@@ -90,9 +90,9 @@
             <h1 class="text-4xl font-semibold text-end">90000</h1>
         </section>
         <section id="select-product" class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
-            <input type="text"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
-                placeholder="Search product...">
+            <form>
+                <input type="text" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2" placeholder="Search product...">
+            </form>
             <div class="mt-2 grid grid-cols-3">
                 @foreach ($products as $product)
                     <figure class="max-w-[105px] cursor-pointer">
