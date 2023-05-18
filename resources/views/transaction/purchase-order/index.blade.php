@@ -68,15 +68,15 @@
                                     <span class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">more_vert</span>
                                     <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 fixed option-dropdown" style="display: none">
                                         <ul class="py-2 text-sm text-gray-700">
-                                        <li>
-                                            <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Quantity</span>
-                                        </li>
-                                        <li>
-                                            <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Discount</span>
-                                        </li>
-                                        <li>
-                                            <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</span>
-                                        </li>
+                                            <li>
+                                                <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Quantity</span>
+                                            </li>
+                                            <li>
+                                                <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Discount</span>
+                                            </li>
+                                            <li>
+                                                <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</span>
+                                            </li>
                                         </ul>
                                     </div>
                                     <x-modal.input title="Quantity" type="number" />
@@ -105,9 +105,9 @@
                         </div>
                         <p class="truncate">{{ $product->name }}</p>
                         <div class="flex items-center mt-1 justify-evenly">
-                            <button class="h-5 w-5 bg-red-600">-</button>
+                            <button type="button" class="h-5 w-5 bg-red-600">-</button>
                             <input type="number" name="quantity" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-7 h-6 p-0.5 text-end" required>
-                            <button>+</button>
+                            <button type="button">+</button>
                         </div>
                         <button type="submit" class="bg-green-400 py-[1px] w-full rounded text-green-800 mt-1">Add</button>
                     </form>

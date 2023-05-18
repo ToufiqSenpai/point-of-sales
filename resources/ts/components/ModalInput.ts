@@ -1,38 +1,40 @@
 import ModalInputOptions from "../types/components/ModalInputOptions";
-import ModalOptions from "../types/components/ModalOption";
 import Modal from "./Modal";
 
 class ModalInput extends Modal {
-  private input: HTMLInputElement
-  private currentValue: string
-  private options: ModalInputOptions
-
-  public constructor(modalEl: Element, options?: ModalInputOptions) {
+  public constructor(modalEl: Element, options: ModalInputOptions) {
     super(modalEl)
 
-    this.input = modalEl.getElementsByTagName('input')[0]
-    this.options = options
+    const form = modalEl.children[0] as HTMLFormElement
+    const input = form.children[1].children[0] as HTMLInputElement
+
+    form.children[0].innerHTML = options.title;
+    form.action = options.action
+
+    input.name = options.name
+    input.type = options.type
+
+    for(const list in options.hiddenInput) {
+      const input = document.createElement('input')
+
+      input.value = options.hiddenInput[list]
+      input.type = 'hidden'
+      input.name = list
+
+      form.appendChild(input);
+    }
   }
 
   public override show(): void {
     super.show()
-    this.options?.onShow(this.input)
     this.closeEventListener()
-
-    this.currentValue = this.input.value
-  }
-
-  public override hidden(): void {
-    super.hidden()
-    this.options?.onHidden(this.input)
-
-    this.input.value = this.currentValue
   }
 
   protected override closeEventListener(): void {
     super.closeEventListener()
 
-    
+    const btn = this.modalEl.children[0].children[2].children[0] as HTMLButtonElement
+    btn.addEventListener('click', () => super.hidden())
   }
 }
 
