@@ -105,6 +105,7 @@ return new class extends Migration
             $table->integer('discount');
             $table->integer('tax');
             $table->bigInteger('shipping');
+            $table->enum('status', ['IN_ORDER', 'SUCCESS']);
             $table->foreignId('supplier_id')->nullable()->constrained('supplier')->onDelete('set null');
             $table->timestamps();
         });
@@ -112,8 +113,7 @@ return new class extends Migration
         Schema::create('purchase_order_product', function (Blueprint $table) {
             $table->id();
             $table->integer('amount');
-            $table->integer('discount');
-            $table->foreignId('product_id')->constrained('product')->onDelete('no action');
+            $table->foreignId('product_id')->nullable()->constrained('product')->onDelete('set null');
             $table->foreignId('purchase_order_id')->constrained('purchase_order');
             $table->timestamps();
         });

@@ -45,10 +45,7 @@ class PurchaseOrderController extends Controller
         $data ? $order = $data : $order_id = Str::uuid();
 
         // Make back url
-        $back_url = '/transaction/purchase-order?'. http_build_query([
-            ...$request->query(),
-            'id' => $order_id
-        ]);
+        $back_url = "/transaction/purchase-order?id=$order_id";
 
         switch ($request->get('action')) {
             case TransactionAction::SET_PRODUCT:
@@ -57,23 +54,27 @@ class PurchaseOrderController extends Controller
                     'quantity' => 'required|integer|max:999'
                 ]);
 
-                $validator->fails() ? '' : null;
+                if($validator->fails()) break;
 
+                // foreach all order list_product
                 foreach ($order['list_product'] as $key => $list) {
+                    // If product_id in list product is equal to product_id from request
+                    // 
                     if ($list['product_id'] == $request['product_id']) {
                         $order['list_product'][$key]['quantity'] += $request['quantity'];
                     } else {
                         array_push($order['list_product'], [
                             'product_id' => $request['product_id'],
-                            'quantity' => $request['quantity']
+                            'quantity' => 1
                         ]);
                     }
                 }
 
+                
                 if (empty($order['list_product'])) {
                     array_push($order['list_product'], [
                         'product_id' => $request['product_id'],
-                        'quantity' => $request['quantity']
+                        'quantity' => 1
                     ]);
                 }
 
@@ -85,9 +86,7 @@ class PurchaseOrderController extends Controller
                     'list_index' => 'required|integer'
                 ]);
 
-                if ($validator->fails()) {
-                    return redirect($back_url);
-                }
+                if($validator->fails()) break;
 
                 unset($order['list_product'][$request['product_index']]);
                 $this->setRedis($order_id, $order);
@@ -98,9 +97,7 @@ class PurchaseOrderController extends Controller
                     'supplier_id' => 'required|integer'
                 ]);
 
-                if ($validator->fails()) {
-                    return redirect($back_url);
-                }
+                if($validator->fails()) break;
 
                 $order['supplier'] = $request['supplier_id'];
                 $this->setRedis($order_id, $order);
@@ -111,9 +108,7 @@ class PurchaseOrderController extends Controller
                     'discount' => 'required|integer|max:100'
                 ]);
 
-                if ($validator->fails()) {
-                    return redirect($back_url);
-                }
+                if($validator->fails()) break;
 
                 $order['discount'] = $request['discount'];
                 $this->setRedis($order_id, $order);
@@ -125,9 +120,7 @@ class PurchaseOrderController extends Controller
                     'list_index' => 'required|integer'
                 ]);
 
-                if ($validator->fails()) {
-                    return redirect($back_url);
-                }
+                if($validator->fails()) break;
 
                 $order['list_product'][$request['list_index']] = $request['quantity'];
                 $this->setRedis($order_id, $order);
@@ -138,9 +131,7 @@ class PurchaseOrderController extends Controller
                     'shipping' => 'required|integer|max:9999999'
                 ]);
 
-                if ($validator->fails()) {
-                    return redirect($back_url);
-                }
+                if($validator->fails()) break;
 
                 $order['shipping'] = $request['shipping'];
                 $this->setRedis($order_id, $order);
@@ -151,17 +142,25 @@ class PurchaseOrderController extends Controller
                     'supplier_id' => 'required|integer'
                 ]);
 
-                if ($validator->fails()) {
-                    return redirect($back_url);
-                }
+                if($validator->fails()) break;
 
                 $order['supplier_id'] = $request['supplier_id'];
                 $this->setRedis($order_id, $order);
 
                 break;
-            default:
+            case TransactionAction::SET_TAX:
+                $validator = Validator::make($request->all(), [
+                    'tax' => 'required|integer|max:100'
+                ]);
+
+                if($validator->fails()) break;
+
+                $order['tax'] = $request['tax'];
+                $this->setRedis($order_id, $order);
 
                 break;
+            default:
+                return redirect($back_url)->with('error', 'Purchase action invalid');
         }
 
         return redirect($back_url);
