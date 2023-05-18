@@ -17,10 +17,8 @@ class PurchaseOrderController extends Controller
 {
     public function index(Request $request): View
     {
-        if($request->query('id')) {
-
+        if ($request->query('id')) {
         } else {
-            
         }
 
         return view('transaction.purchase-order.index', [
@@ -38,39 +36,31 @@ class PurchaseOrderController extends Controller
             'discount' => null,
             'list_product' => []
         ];
-        $transaction_id = (string) $request->query('id');
-        $search_query = $request->get('search');
-        $back_url = "/transaction/purchase-order?id=$transaction_id";
+        $order_id = (string) $request->query('id');
 
-        if($search_query) {
-            $back_url. "&search=$search_query";
-        }
+        $data = $this->getRedis($order_id); // Get available pair order in redis
 
-        // If transaction id is setted, get order data in redis.
-        // Else, make a new order data and make uuid.
-        if($transaction_id) {
-            $data = $this->getRedis($transaction_id);
+        // If the key is setted, set $order to current order
+        // Else, make a new order by make a new id for purchase transaction
+        $data ? $order = $data : $order_id = Str::uuid();
 
-            // If the key not found, redirect to back url
-            if(!$data) $transaction_id = Str::uuid();
-            else $order = $data;
-        } else {
-            $transaction_id = Str::uuid();
-        }
+        // Make back url
+        $back_url = '/transaction/purchase-order?'. http_build_query([
+            ...$request->query(),
+            'id' => $order_id
+        ]);
 
-        switch($request->get('action')) {
+        switch ($request->get('action')) {
             case TransactionAction::SET_PRODUCT:
                 $validator = Validator::make($request->all(), [
                     'product_id' => 'required|integer',
                     'quantity' => 'required|integer|max:999'
                 ]);
 
-                if($validator->fails()) {
-                    return redirect($back_url);
-                }
+                $validator->fails() ? '' : null;
 
-                foreach($order['list_product'] as $key => $list) {
-                    if($list['product_id'] == $request['product_id']) {
+                foreach ($order['list_product'] as $key => $list) {
+                    if ($list['product_id'] == $request['product_id']) {
                         $order['list_product'][$key]['quantity'] += $request['quantity'];
                     } else {
                         array_push($order['list_product'], [
@@ -80,14 +70,14 @@ class PurchaseOrderController extends Controller
                     }
                 }
 
-                if(empty($order['list_product'])) {
+                if (empty($order['list_product'])) {
                     array_push($order['list_product'], [
                         'product_id' => $request['product_id'],
                         'quantity' => $request['quantity']
                     ]);
                 }
 
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::DELETE_PRODUCT:
@@ -95,12 +85,12 @@ class PurchaseOrderController extends Controller
                     'list_index' => 'required|integer'
                 ]);
 
-                if($validator->fails()) {
+                if ($validator->fails()) {
                     return redirect($back_url);
                 }
 
                 unset($order['list_product'][$request['product_index']]);
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::SET_SUPPLIER:
@@ -108,12 +98,12 @@ class PurchaseOrderController extends Controller
                     'supplier_id' => 'required|integer'
                 ]);
 
-                if($validator->fails()) {
+                if ($validator->fails()) {
                     return redirect($back_url);
                 }
 
                 $order['supplier'] = $request['supplier_id'];
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::SET_DISCOUNT:
@@ -121,12 +111,12 @@ class PurchaseOrderController extends Controller
                     'discount' => 'required|integer|max:100'
                 ]);
 
-                if($validator->fails()) {
+                if ($validator->fails()) {
                     return redirect($back_url);
                 }
 
                 $order['discount'] = $request['discount'];
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::SET_QUANTITY:
@@ -135,12 +125,12 @@ class PurchaseOrderController extends Controller
                     'list_index' => 'required|integer'
                 ]);
 
-                if($validator->fails()) {
+                if ($validator->fails()) {
                     return redirect($back_url);
                 }
 
                 $order['list_product'][$request['list_index']] = $request['quantity'];
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::SET_SHIPPING:
@@ -148,12 +138,12 @@ class PurchaseOrderController extends Controller
                     'shipping' => 'required|integer|max:9999999'
                 ]);
 
-                if($validator->fails()) {
+                if ($validator->fails()) {
                     return redirect($back_url);
                 }
 
                 $order['shipping'] = $request['shipping'];
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::SET_SUPPLIER:
@@ -161,12 +151,12 @@ class PurchaseOrderController extends Controller
                     'supplier_id' => 'required|integer'
                 ]);
 
-                if($validator->fails()) {
+                if ($validator->fails()) {
                     return redirect($back_url);
                 }
 
                 $order['supplier_id'] = $request['supplier_id'];
-                $this->setRedis($transaction_id, $order);
+                $this->setRedis($order_id, $order);
 
                 break;
             default:
@@ -177,13 +167,13 @@ class PurchaseOrderController extends Controller
         return redirect($back_url);
     }
 
-    private function setRedis(string $key, array $value): void 
+    private function setRedis(string $key, array $value): void
     {
-        Redis::set('purchase-order:'.$key, json_encode($value));
+        Redis::set('purchase-order:' . $key, json_encode($value));
     }
 
     private function getRedis(string $key): array | null
     {
-        return json_decode(Redis::get('purchase-order:'. $key));
+        return json_decode(Redis::get('purchase-order:' . $key));
     }
 }
