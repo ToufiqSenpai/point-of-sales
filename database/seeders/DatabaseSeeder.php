@@ -19,5 +19,26 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin123'),
             'role' => 'OWNER'
         ]);
+
+        DB::table('product_unit')->insert([
+            'name' => 'Km'
+        ]);
+
+        DB::table('product_brand')->insert([
+            'name' => "Fu'ad"
+        ]);
+
+        DB::table('product_category')->insert([
+            'name' => 'Alat tulis'
+        ]);
+
+        DB::table('product')->insert([
+            'name' => 'Sabun Kopi',
+            'brand_id' => 1,
+            'category_id' => 1,
+            'unit_id' => 1,
+            'base_price' => 69,
+            'selling_price' => 6969
+        ]);
     }
 }

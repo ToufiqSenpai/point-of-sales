@@ -102,17 +102,18 @@ return new class extends Migration
 
         Schema::create('purchase_order', function (Blueprint $table) {
             $table->id();
-            $table->integer('discount');
-            $table->integer('tax');
-            $table->bigInteger('shipping');
-            $table->enum('status', ['IN_ORDER', 'SUCCESS']);
+            $table->integer('discount')->default(0);
+            $table->integer('tax')->default(0);
+            $table->bigInteger('shipping')->default(0);
+            $table->enum('status', ['IN_ORDER', 'SUCCESS'])->default('IN_ORDER');
             $table->foreignId('supplier_id')->nullable()->constrained('supplier')->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
 
         Schema::create('purchase_order_product', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
+            $table->integer('quantity');
             $table->foreignId('product_id')->nullable()->constrained('product')->onDelete('set null');
             $table->foreignId('purchase_order_id')->constrained('purchase_order');
             $table->timestamps();

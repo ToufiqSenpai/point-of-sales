@@ -36,10 +36,10 @@
                                 Name
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Price
+                                Quantity
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Quantity
+                                Price
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Subtotal
@@ -50,38 +50,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white dark:bg-gray-800">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Apple MacBook Pro 17"
-                            </th>
-                            <td class="px-6 py-4">
-                                Silver
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="/product">fwe</a>
-                            </td>
-                            <td class="px-6 py-4">
-                                Laptop
-                            </td>
-                            <td class="px-6 py-4 table-option-dropdown">
-                                <span class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">more_vert</span>
-                                <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 fixed option-dropdown" style="display: none">
-                                    <ul class="py-2 text-sm text-gray-700">
-                                      <li>
-                                        <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Quantity</span>
-                                      </li>
-                                      <li>
-                                        <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Discount</span>
-                                      </li>
-                                      <li>
-                                        <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</span>
-                                      </li>
-                                    </ul>
-                                </div>
-                                <x-modal.input title="Quantity" type="number" />
-                                <x-modal.input title="Discount" type="number" />
-                            </td>
-                        </tr>
+                        @foreach ($purchase_order->items as $item)
+                            <tr class="bg-white dark:bg-gray-800">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $item->product->name }}
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $item->quantity }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    ${{ number_format($item->product->base_price) }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    ${{ number_format($item->product->base_price * $item->quantity) }}
+                                </td>
+                                <td class="px-6 py-4 table-option-dropdown">
+                                    <span class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">more_vert</span>
+                                    <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 fixed option-dropdown" style="display: none">
+                                        <ul class="py-2 text-sm text-gray-700">
+                                        <li>
+                                            <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Quantity</span>
+                                        </li>
+                                        <li>
+                                            <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Discount</span>
+                                        </li>
+                                        <li>
+                                            <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</span>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                    <x-modal.input title="Quantity" type="number" />
+                                    <x-modal.input title="Discount" type="number" />
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -95,19 +97,19 @@
             </form>
             <div class="mt-2 grid grid-cols-3">
                 @foreach ($products as $product)
-                    <form class="max-w-[105px] cursor-pointer" method="POST" action="/transaction/purchase-order?action=set_product">
+                    <form class="max-w-[105px] cursor-pointer" method="POST" action="/transaction/purchase-order?action=set_items">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <div class="w-[105px] h-[105px]">
-                            <img src="/storage/product/{{ $product->image->name }}" class="object-cover w-full h-full" />
+                            <img src="/storage/product/{{ $product->image?->name }}" class="object-cover w-full h-full" />
                         </div>
+                        <p class="truncate">{{ $product->name }}</p>
                         <div class="flex items-center mt-1 justify-evenly">
                             <button class="h-5 w-5 bg-red-600">-</button>
                             <input type="number" name="quantity" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-7 h-6 p-0.5 text-end" required>
                             <button>+</button>
                         </div>
-                        <p class="truncate">OFfwefwfwefwefwfwef</p>
-                        <button type="submit">Add</button>
+                        <button type="submit" class="bg-green-400 py-[1px] w-full rounded text-green-800 mt-1">Add</button>
                     </form>
                 @endforeach
             </div>

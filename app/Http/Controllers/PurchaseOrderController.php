@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\Supplier;
+use App\Models\PurchaseOrder;
 use App\Enums\TransactionAction;
+use App\Models\PurchaseOrderProduct;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,79 +19,55 @@ class PurchaseOrderController extends Controller
 {
     public function index(Request $request): View
     {
-        if ($request->query('id')) {
-        } else {
-        }
+        $po_id = $request->get('id');
 
         return view('transaction.purchase-order.index', [
             'suppliers' => Supplier::all(),
-            'products' => Product::all()
+            'products' => Product::all(),
+            'purchase_order' => PurchaseOrder::find($po_id) ?? []
         ]);
     }
 
     public function order(Request $request): RedirectResponse
     {
-        $order = [
-            'supplier_id' => null,
-            'shipping' => null,
-            'tax' => null,
-            'discount' => null,
-            'list_product' => []
-        ];
-        $order_id = (string) $request->query('id');
-
-        $data = $this->getRedis($order_id); // Get available pair order in redis
-
-        // If the key is setted, set $order to current order
-        // Else, make a new order by make a new id for purchase transaction
-        $data ? $order = $data : $order_id = Str::uuid();
+        $purchase_order = PurchaseOrder::find($request->get('id'));
+        if(!$purchase_order) {
+            $purchase_order = new PurchaseOrder();
+            $purchase_order->save();
+        }
 
         // Make back url
-        $back_url = "/transaction/purchase-order?id=$order_id";
+        $back_url = "/transaction/purchase-order?id=". $purchase_order->id;
 
         switch ($request->get('action')) {
-            case TransactionAction::SET_PRODUCT:
+            case TransactionAction::SET_ITEMS:
                 $validator = Validator::make($request->all(), [
-                    'product_id' => 'required|integer',
+                    'product_id' => 'required|integer|exists:product,id',
                     'quantity' => 'required|integer|max:999'
                 ]);
 
                 if($validator->fails()) break;
 
-                // foreach all order list_product
-                foreach ($order['list_product'] as $key => $list) {
-                    // If product_id in list product is equal to product_id from request
-                    // 
-                    if ($list['product_id'] == $request['product_id']) {
-                        $order['list_product'][$key]['quantity'] += $request['quantity'];
-                    } else {
-                        array_push($order['list_product'], [
-                            'product_id' => $request['product_id'],
-                            'quantity' => 1
-                        ]);
-                    }
-                }
+                $po_product = $purchase_order->items()->where('product_id', $request['product_id'])->first();
 
-                
-                if (empty($order['list_product'])) {
-                    array_push($order['list_product'], [
+                if($po_product) {
+                    $po_product->quantity += (int) $request['quantity'];
+                    $po_product->save();
+                } else {
+                    $purchase_order->items()->create([
+                        'quantity' => $request['quantity'],
                         'product_id' => $request['product_id'],
-                        'quantity' => 1
+                        'purchase_order_id' => $purchase_order->id
                     ]);
                 }
 
-                $this->setRedis($order_id, $order);
-
                 break;
-            case TransactionAction::DELETE_PRODUCT:
+            case TransactionAction::DELETE_ITEMS:
                 $validator = Validator::make($request->all(), [
                     'list_index' => 'required|integer'
                 ]);
 
                 if($validator->fails()) break;
-
-                unset($order['list_product'][$request['product_index']]);
-                $this->setRedis($order_id, $order);
 
                 break;
             case TransactionAction::SET_SUPPLIER:
@@ -99,9 +77,7 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $order['supplier'] = $request['supplier_id'];
-                $this->setRedis($order_id, $order);
-
+    
                 break;
             case TransactionAction::SET_DISCOUNT:
                 $validator = Validator::make($request->all(), [
@@ -110,9 +86,7 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $order['discount'] = $request['discount'];
-                $this->setRedis($order_id, $order);
-
+            
                 break;
             case TransactionAction::SET_QUANTITY:
                 $validator = Validator::make($request->all(), [
@@ -122,8 +96,7 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $order['list_product'][$request['list_index']] = $request['quantity'];
-                $this->setRedis($order_id, $order);
+               
 
                 break;
             case TransactionAction::SET_SHIPPING:
@@ -133,8 +106,7 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $order['shipping'] = $request['shipping'];
-                $this->setRedis($order_id, $order);
+        
 
                 break;
             case TransactionAction::SET_SUPPLIER:
@@ -144,8 +116,7 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $order['supplier_id'] = $request['supplier_id'];
-                $this->setRedis($order_id, $order);
+            
 
                 break;
             case TransactionAction::SET_TAX:
@@ -155,13 +126,14 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $order['tax'] = $request['tax'];
-                $this->setRedis($order_id, $order);
+            
 
                 break;
             default:
                 return redirect($back_url)->with('error', 'Purchase action invalid');
         }
+
+        $purchase_order->save();
 
         return redirect($back_url);
     }
