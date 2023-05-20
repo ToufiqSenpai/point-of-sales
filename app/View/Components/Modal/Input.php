@@ -12,10 +12,7 @@ class Input extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $title,
-        public string $type = 'text',
-        public string $action,
-        public string $name
+        public string $method
     )
     {
         //

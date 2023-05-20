@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductImage;
 use App\Models\Supplier;
 use App\Models\PurchaseOrder;
 use App\Enums\TransactionAction;
-use App\Models\PurchaseOrderProduct;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +21,7 @@ class PurchaseOrderController extends Controller
         return view('transaction.purchase-order.index', [
             'suppliers' => Supplier::all(),
             'products' => Product::all(),
-            'purchase_order' => PurchaseOrder::find($po_id) ?? []
+            'purchase_order' => PurchaseOrder::find($po_id)
         ]);
     }
 
@@ -91,7 +88,7 @@ class PurchaseOrderController extends Controller
             case TransactionAction::SET_QUANTITY:
                 $validator = Validator::make($request->all(), [
                     'quantity' => 'required|integer|max:999',
-                    'list_index' => 'required|integer'
+                    'item_id' => 'required|integer|exist:purchase_transaction_product'
                 ]);
 
                 if($validator->fails()) break;

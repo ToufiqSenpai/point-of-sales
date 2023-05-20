@@ -111,7 +111,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('purchase_order_product', function (Blueprint $table) {
+        Schema::create('purchase_order_item', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
             $table->foreignId('product_id')->nullable()->constrained('product')->onDelete('set null');

@@ -50,7 +50,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($purchase_order->items as $item)
+                        @foreach ($purchase_order->items ?? [] as $item)
                             <tr class="bg-white dark:bg-gray-800">
                                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $item->product->name }}
@@ -64,23 +64,10 @@
                                 <td class="px-6 py-4">
                                     ${{ number_format($item->product->base_price * $item->quantity) }}
                                 </td>
-                                <td class="px-6 py-4 table-option-dropdown">
-                                    <span class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">more_vert</span>
-                                    <div class="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 fixed option-dropdown" style="display: none">
-                                        <ul class="py-2 text-sm text-gray-700">
-                                            <li>
-                                                <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Quantity</span>
-                                            </li>
-                                            <li>
-                                                <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Discount</span>
-                                            </li>
-                                            <li>
-                                                <span class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Delete</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <x-modal.input title="Quantity" type="number" />
-                                    <x-modal.input title="Discount" type="number" />
+                                <td class="px-6 py-4 table-option-dropdown" data-item-id="{{ $item->id }}" data-quantity="{{ $item->quantity }}">
+                                    <button class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">shopping_basket</button>
+                                    <button class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">delete</button>
+                                    <x-modal.input method="POST" />
                                 </td>
                             </tr>
                         @endforeach

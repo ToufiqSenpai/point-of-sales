@@ -6,13 +6,14 @@ class ModalInput extends Modal {
     super(modalEl)
 
     const form = modalEl.children[0] as HTMLFormElement
-    const input = form.children[1].children[0] as HTMLInputElement
+    const input = form.children[2].children[0] as HTMLInputElement
 
-    form.children[0].innerHTML = options.title;
+    form.children[1].innerHTML = options.title;
     form.action = options.action
-
+    
     input.name = options.name
     input.type = options.type
+    options.defaultInput && (input.value = options.defaultInput)
 
     for(const list in options.hiddenInput) {
       const input = document.createElement('input')
@@ -33,7 +34,7 @@ class ModalInput extends Modal {
   protected override closeEventListener(): void {
     super.closeEventListener()
 
-    const btn = this.modalEl.children[0].children[2].children[0] as HTMLButtonElement
+    const btn = this.modalEl.children[0].children[3].children[0] as HTMLButtonElement
     btn.addEventListener('click', () => super.hidden())
   }
 }

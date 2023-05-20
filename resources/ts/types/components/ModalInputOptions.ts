@@ -3,6 +3,7 @@ interface ModalInputOptions {
   type: string
   action: string
   name: string
+  defaultInput?: string
   hiddenInput?: {
     [key: string]: string
   }

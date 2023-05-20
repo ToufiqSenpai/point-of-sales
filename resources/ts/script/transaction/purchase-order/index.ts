@@ -1,3 +1,4 @@
+import ModalInput from "../../../components/ModalInput"
 import clickOutsideCloser from "../../../utils/clickOutsideCloser"
 
 // Form section
@@ -14,21 +15,20 @@ for(const form of forms) {
 
 // Table option section
 Array.from(document.getElementsByClassName('table-option-dropdown')).forEach((el: HTMLElement): void => {
-  const moreButton = el.children[0] as HTMLSpanElement,
-  dropdown = el.children[1] as HTMLDivElement
+  const quantityButton = el.children[0] as HTMLButtonElement,
+  deleteButton = el.children[1] as HTMLButtonElement
 
-  /* More button section */
-  // Add event listener to "more button"
-  moreButton.addEventListener('click', () => {
-    if(dropdown.style.display == 'none') dropdown.style.display = 'block'
-    else dropdown.style.display = 'none'
+  const modalQuantity = new ModalInput(el.children[2], {
+    title: 'Edit Quantity',
+    action: `/transaction/purchase-order?id=${url.get('id')}&action=set_quantity`,
+    type: 'number',
+    name: 'quantity',
+    defaultInput: el.getAttribute('data-quantity'),
+    hiddenInput: {
+      item_id: el.getAttribute('data-item-id')
+    }
   })
 
-  /* When dropdown is opened, and user click outside, close the dropdown */
-  clickOutsideCloser(moreButton, () => dropdown.style.display = 'none')
-
-  /* Dropdown section */
-  for(const span of dropdown.getElementsByTagName('span')) {
-    span.addEventListener('click', () => )
-  }
+  // Add event listener to "quantity button"
+  quantityButton.addEventListener('click', () => modalQuantity.show())
 })

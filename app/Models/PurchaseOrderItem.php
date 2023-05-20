@@ -6,14 +6,12 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class PurchaseOrderProduct extends Model
 {
     use HasFactory;
 
-    protected $table = 'purchase_order_product';
+    protected $table = 'purchase_order_item';
 
     protected $fillable = [
         'quantity',
