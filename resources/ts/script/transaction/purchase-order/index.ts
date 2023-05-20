@@ -15,10 +15,9 @@ for(const form of forms) {
 
 // Table option section
 Array.from(document.getElementsByClassName('table-option-dropdown')).forEach((el: HTMLElement): void => {
-  const quantityButton = el.children[0] as HTMLButtonElement,
-  deleteButton = el.children[1] as HTMLButtonElement
+  const quantityButton = el.children[0].children[0] as HTMLButtonElement
 
-  const modalQuantity = new ModalInput(el.children[2], {
+  const modalQuantity = new ModalInput(el.children[1], {
     title: 'Edit Quantity',
     action: `/transaction/purchase-order?id=${url.get('id')}&action=set_quantity`,
     type: 'number',
@@ -31,4 +30,18 @@ Array.from(document.getElementsByClassName('table-option-dropdown')).forEach((el
 
   // Add event listener to "quantity button"
   quantityButton.addEventListener('click', () => modalQuantity.show())
+})
+
+// Quantity product select section
+Array.from(document.getElementsByClassName('set-quantity-product')).forEach((el: HTMLElement): void => {
+  const input = el.children[1] as HTMLInputElement,
+  decrementBtn = el.children[0] as HTMLButtonElement,
+  incrementBtn = el.children[2] as HTMLButtonElement
+
+  decrementBtn.addEventListener('click', () => {
+    if(parseInt(input.value) <= 1) return
+    input.value = (parseInt(input.value) - 1).toString()
+  })
+
+  incrementBtn.addEventListener('click', () => input.value = (parseInt(input.value) + 1).toString())
 })

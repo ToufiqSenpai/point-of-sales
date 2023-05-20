@@ -6,10 +6,10 @@ use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\PurchaseOrder;
 use App\Enums\TransactionAction;
+use App\Models\PurchaseOrderItem;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class PurchaseOrderController extends Controller
@@ -17,11 +17,20 @@ class PurchaseOrderController extends Controller
     public function index(Request $request): View
     {
         $po_id = $request->get('id');
+        $purchase_order = PurchaseOrder::find($po_id);
+
+        // Count all subtotal item
+        // item_price * quantity + subtotal
+        $subtotal = 0;
+        foreach($purchase_order->items ?? [] as $item) {
+            $subtotal += $item->product->base_price * $item->quantity;
+        }
 
         return view('transaction.purchase-order.index', [
             'suppliers' => Supplier::all(),
             'products' => Product::all(),
-            'purchase_order' => PurchaseOrder::find($po_id)
+            'purchase_order' => $purchase_order,
+            'subtotal' => $subtotal
         ]);
     }
 
@@ -42,7 +51,6 @@ class PurchaseOrderController extends Controller
                     'product_id' => 'required|integer|exists:product,id',
                     'quantity' => 'required|integer|max:999'
                 ]);
-
                 if($validator->fails()) break;
 
                 $po_product = $purchase_order->items()->where('product_id', $request['product_id'])->first();
@@ -59,12 +67,14 @@ class PurchaseOrderController extends Controller
                 }
 
                 break;
-            case TransactionAction::DELETE_ITEMS:
+            case TransactionAction::DELETE_ITEM:
                 $validator = Validator::make($request->all(), [
-                    'list_index' => 'required|integer'
+                    'item_id' => 'required|integer|exists:purchase_order_item,id'
                 ]);
-
                 if($validator->fails()) break;
+
+                $item = PurchaseOrderItem::find($request['item_id']);
+                $item->delete();
 
                 break;
             case TransactionAction::SET_SUPPLIER:
@@ -88,12 +98,13 @@ class PurchaseOrderController extends Controller
             case TransactionAction::SET_QUANTITY:
                 $validator = Validator::make($request->all(), [
                     'quantity' => 'required|integer|max:999',
-                    'item_id' => 'required|integer|exist:purchase_transaction_product'
+                    'item_id' => 'required|integer|exists:purchase_order_item,id'
                 ]);
-
                 if($validator->fails()) break;
 
-               
+                $item = PurchaseOrderItem::find($request['item_id']);
+                $item->quantity = $request['quantity'];
+                $item->save();
 
                 break;
             case TransactionAction::SET_SHIPPING:
@@ -104,16 +115,6 @@ class PurchaseOrderController extends Controller
                 if($validator->fails()) break;
 
         
-
-                break;
-            case TransactionAction::SET_SUPPLIER:
-                $validator = Validator::make($request->all(), [
-                    'supplier_id' => 'required|integer'
-                ]);
-
-                if($validator->fails()) break;
-
-            
 
                 break;
             case TransactionAction::SET_TAX:
@@ -133,15 +134,5 @@ class PurchaseOrderController extends Controller
         $purchase_order->save();
 
         return redirect($back_url);
-    }
-
-    private function setRedis(string $key, array $value): void
-    {
-        Redis::set('purchase-order:' . $key, json_encode($value));
-    }
-
-    private function getRedis(string $key): array | null
-    {
-        return json_decode(Redis::get('purchase-order:' . $key));
     }
 }

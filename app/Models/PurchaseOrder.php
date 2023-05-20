@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\PurchaseOrderProduct;
+use App\Models\PurchaseOrderItem;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -23,6 +23,6 @@ class PurchaseOrder extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(PurchaseOrderProduct::class, 'purchase_order_id');
+        return $this->hasMany(PurchaseOrderItem::class, 'purchase_order_id');
     }
 }

@@ -4,7 +4,7 @@ namespace App\Enums;
 
 final class TransactionAction
 {
-  const DELETE_ITEMS = 'delete_items';
+  const DELETE_ITEM = 'delete_item';
   const SET_ITEMS = 'set_items';
   const SET_SUPPLIER = 'set_supplier';
   const SET_QUANTITY = 'set_quantity';

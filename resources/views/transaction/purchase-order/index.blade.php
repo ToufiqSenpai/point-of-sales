@@ -65,8 +65,14 @@
                                     ${{ number_format($item->product->base_price * $item->quantity) }}
                                 </td>
                                 <td class="px-6 py-4 table-option-dropdown" data-item-id="{{ $item->id }}" data-quantity="{{ $item->quantity }}">
-                                    <button class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">shopping_basket</button>
-                                    <button class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">delete</button>
+                                    <div class="flex items-center">
+                                        <button class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">shopping_basket</button>
+                                        <form action="/transaction/purchase-order?id={{ request()->get('id') }}&action=delete_item" method="post">
+                                            @csrf
+                                            <input type="hidden" name="item_id" value="{{ $item->id }}" />
+                                            <button type="submit" class="material-icons hover:bg-gray-100 rounded-full p-[2px] cursor-pointer">delete</button>
+                                        </form>
+                                    </div>
                                     <x-modal.input method="POST" />
                                 </td>
                             </tr>
@@ -76,7 +82,7 @@
             </div>
         </section>
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
-            <h1 class="text-4xl font-semibold text-end">90000</h1>
+            <h1 class="text-4xl font-semibold text-end">${{ $subtotal }}</h1>
         </section>
         <section id="select-product" class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
             <form>
@@ -88,15 +94,15 @@
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}" />
                         <div class="w-[105px] h-[105px]">
-                            <img src="/storage/product/{{ $product->image?->name }}" class="object-cover w-full h-full" />
+                            <img src="{{ isset($product->image->name) ? '/storage/product/'. $product->image->name : '/storage/icons/no-picture.png' }}" class="object-cover w-full h-full" />
                         </div>
                         <p class="truncate">{{ $product->name }}</p>
-                        <div class="flex items-center mt-1 justify-evenly">
-                            <button type="button" class="h-5 w-5 bg-red-600">-</button>
+                        <div class="flex items-center mt-1 justify-evenly set-quantity-product">
+                            <button type="button" class="h-5 w-5 bg-gray-200 border border-solid border-gray-500 rounded material-icons inc-dec-btn">remove</button>
                             <input type="number" name="quantity" value="1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-7 h-6 p-0.5 text-end" required>
-                            <button type="button">+</button>
+                            <button type="button" class="h-5 w-5 bg-gray-200 border border-solid border-gray-500 rounded material-icons inc-dec-btn">add</button>
                         </div>
-                        <button type="submit" class="bg-green-400 py-[1px] w-full rounded text-green-800 mt-1">Add</button>
+                        <button type="submit" class="bg-green-400 py-[1px] w-full rounded text-green-800 mt-1 text-sm font-medium">Add</button>
                     </form>
                 @endforeach
             </div>
