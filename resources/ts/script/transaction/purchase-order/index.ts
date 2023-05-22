@@ -36,6 +36,7 @@ Array.from(document.getElementsByClassName('set-quantity-product')).forEach((el:
 // Form section
 const forms = document.getElementsByTagName('form')
 const url = new URLSearchParams(location.search)
+let formSubmitting: boolean = false
 
 for(const form of forms) {
   // When the querystring not have id param
@@ -43,7 +44,29 @@ for(const form of forms) {
   if(!url.get('id') && form.elements['search']) continue
 
   form.action = form.action + '&id=' + url.get('id')
+
+  form.addEventListener('submit', () => {
+    formSubmitting = true
+  })
 }
+
+// Before unload alert section
+const dltPoForm = document.getElementById('delete-po-form') as HTMLFormElement
+
+window.addEventListener('beforeunload', e => {
+  if(!formSubmitting) {
+    const confirmMessage = "Are you sure want to leave this page? This order draft will deleted."
+    e.returnValue = confirmMessage
+
+    return confirmMessage
+  }
+})
+
+window.addEventListener('unload', e => {
+  if(!formSubmitting) {
+    dltPoForm.submit()
+  }
+})
 
 // Cash and change section
 const cashInput = document.getElementById('cash-input') as HTMLInputElement,

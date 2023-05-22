@@ -138,4 +138,25 @@ class PurchaseOrderController extends Controller
 
         return redirect($back_url);
     }
+
+    public function destroy(Request $request): RedirectResponse
+    {
+        $purchase_order = PurchaseOrder::find($request['id']);
+
+        if($purchase_order && $purchase_order->status == 'IN_ORDER') {
+            $purchase_order->forceDelete();
+
+            return back();
+        } else if($purchase_order && $purchase_order->status == 'SUCCESS') {
+            $purchase_order->delete();
+
+            return back()->with([
+                'success' => 'Order history have been deleted'
+            ]);
+        } else {
+            return back()->with([
+                'error' => 'Product not found'
+            ]);
+        }
+    }
 }

@@ -93,6 +93,12 @@
                     <input type="text" id="change-input" data-subtotal="{{ $subtotal }}" class="bg-gray-200 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="$0" disabled readonly>
                 </div>
             </form>
+            {{-- Delete order archieve --}}
+            <form id="delete-po-form" method="POST" action="/transaction/purchase-order">
+                @csrf
+                @method('DELETE')
+                <input type="hidden" name="id" value="{{ request()->get('id') }}" />
+            </form>
         </section>
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
             <h1 class="text-4xl font-semibold text-end">${{ $subtotal }}</h1>
