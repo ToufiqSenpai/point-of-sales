@@ -90,9 +90,10 @@ class ProductController extends Controller
         if($image) {
             $old_product_image = ProductImage::find($product['image_id']);
 
-            Storage::disk('public')->delete('product/'. $old_product_image->name);
-
-            $old_product_image->delete();
+            if($old_product_image) {
+                Storage::disk('public')->delete('product/'. $old_product_image->name);
+                $old_product_image->delete();
+            }
             
             $image_name = Str::uuid() .'.'. $image->extension();
             $image->storeAs('product', $image_name, 'public');

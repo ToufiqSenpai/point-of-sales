@@ -1,17 +1,4 @@
 import ModalInput from "../../../components/ModalInput"
-import clickOutsideCloser from "../../../utils/clickOutsideCloser"
-
-// Form section
-const forms = document.getElementsByTagName('form')
-const url = new URLSearchParams(location.search)
-
-for(const form of forms) {
-  // When the querystring not have id param
-  // Skip form with search field
-  if(!url.get('id') && form.elements['search']) continue
-
-  form.action = form.action + '&id=' + url.get('id')
-}
 
 // Table option section
 Array.from(document.getElementsByClassName('table-option-dropdown')).forEach((el: HTMLElement): void => {
@@ -19,7 +6,7 @@ Array.from(document.getElementsByClassName('table-option-dropdown')).forEach((el
 
   const modalQuantity = new ModalInput(el.children[1], {
     title: 'Edit Quantity',
-    action: `/transaction/purchase-order?id=${url.get('id')}&action=set_quantity`,
+    action: `/transaction/purchase-order?action=set_quantity`,
     type: 'number',
     name: 'quantity',
     defaultInput: el.getAttribute('data-quantity'),
@@ -44,4 +31,34 @@ Array.from(document.getElementsByClassName('set-quantity-product')).forEach((el:
   })
 
   incrementBtn.addEventListener('click', () => input.value = (parseInt(input.value) + 1).toString())
+})
+
+// Form section
+const forms = document.getElementsByTagName('form')
+const url = new URLSearchParams(location.search)
+
+for(const form of forms) {
+  // When the querystring not have id param
+  // Skip form with search field
+  if(!url.get('id') && form.elements['search']) continue
+
+  form.action = form.action + '&id=' + url.get('id')
+}
+
+// Cash and change section
+const cashInput = document.getElementById('cash-input') as HTMLInputElement,
+changeInput = document.getElementById('change-input') as HTMLInputElement
+
+cashInput.addEventListener('input', e => {
+  changeInput.value = '$'.concat( cashInput.value ? (parseInt(cashInput.value) - parseInt(changeInput.getAttribute('data-subtotal'))).toString() : '0')
+})
+
+// Select supplier section
+const supplierSelect = document.getElementById('supplier-select') as HTMLSelectElement,
+supplierForm = document.getElementById('set-supplier-form') as HTMLFormElement,
+supplierIdInput = supplierForm.children[0] as HTMLInputElement
+
+supplierSelect.addEventListener('change', () => {
+  supplierIdInput.value = supplierSelect.value
+  supplierForm.submit()
 })

@@ -79,11 +79,14 @@ class PurchaseOrderController extends Controller
                 break;
             case TransactionAction::SET_SUPPLIER:
                 $validator = Validator::make($request->all(), [
-                    'supplier_id' => 'required|integer'
+                    'supplier_id' => 'required|integer|exists:supplier,id'
                 ]);
 
                 if($validator->fails()) break;
 
+                $purchase_order = PurchaseOrder::find($request->get('id'));
+                $purchase_order->supplier_id = $request['supplier_id'];
+                $purchase_order->save();
     
                 break;
             case TransactionAction::SET_DISCOUNT:

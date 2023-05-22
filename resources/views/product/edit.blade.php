@@ -50,7 +50,7 @@
                         <span class="z-10 absolute top-[2px] right-[2px] rounded-full text-white bg-[rgba(55,65,81,0.8)] flex justify-between items-center cursor-pointer">
                         </span>
                         <label id="product-cu-img" class="relative border border-dashed border-slate-800 rounded-md w-[120px] h-[120px] flex justify-between items-center cursor-pointer overflow-hidden">
-                            <img src="/storage/product/{{ $product->image->name }}" width="93" height="93" class="mx-auto" />
+                            <img src="{{ isset($product->image->name) ? '/storage/product/'. $product->image->name : '/storage/icons/no-picture.png' }}" width="93" height="93" class="mx-auto" />
                             <input type="file" name="image" hidden />
                         </label>
                     </div>

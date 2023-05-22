@@ -17,7 +17,7 @@
                 <p>Tanggal: <time id="transaction-date"></time></p>
                 <p>Kasir: {{ Auth::user()->name }}</p>
             </section>
-            <select id="supplier-select" name="brand_id"
+            <select id="supplier-select"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
                 required>
                 <option selected disabled>Supplier</option>
@@ -25,9 +25,12 @@
                     <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                 @endforeach
             </select>
-            <input type="text" id="barcode-input"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
-                placeholder="Barcode">
+            {{-- FORM for set supplier --}}
+            <form id="set-supplier-form" method="POST" action="/transaction/purchase-order?action=set_supplier">
+                <input type="hidden" name="supplier_id" />
+                @csrf
+            </form>
+            <input type="text" id="barcode-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2" placeholder="Barcode">
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
@@ -80,6 +83,16 @@
                     </tbody>
                 </table>
             </div>
+            <form>
+                <div class="@if(count($purchase_order->items ?? [])) mt-2 @else mt-[70px] @endif">
+                    <label for="cash-input" class="block text-sm font-medium text-gray-900 mb-1">Cash</label>
+                    <input type="number" id="cash-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
+                <div class="mt-2">
+                    <label for="change-input" class="block text-sm font-medium text-gray-900 mb-1">Change</label>
+                    <input type="text" id="change-input" data-subtotal="{{ $subtotal }}" class="bg-gray-200 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="$0" disabled readonly>
+                </div>
+            </form>
         </section>
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
             <h1 class="text-4xl font-semibold text-end">${{ $subtotal }}</h1>

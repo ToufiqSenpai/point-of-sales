@@ -40,5 +40,11 @@ class DatabaseSeeder extends Seeder
             'base_price' => 69,
             'selling_price' => 6969
         ]);
+
+        DB::table('supplier')->insert([
+            'name' => 'Fuad',
+            'address' => 'Jl. cinta',
+            'phone' => 123456789
+        ]);
     }
 }
