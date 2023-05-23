@@ -1,5 +1,11 @@
 import ModalInput from "../../../components/ModalInput"
 
+// Transaction time section
+const transactionDate = document.getElementById('transaction-date')
+const datetime = transactionDate.getAttribute('datetime')
+
+if(datetime) transactionDate.innerHTML = new Date(datetime).toLocaleString()
+
 // Table option section
 Array.from(document.getElementsByClassName('table-option-dropdown')).forEach((el: HTMLElement): void => {
   const quantityButton = el.children[0].children[0] as HTMLButtonElement
@@ -49,24 +55,6 @@ for(const form of forms) {
     formSubmitting = true
   })
 }
-
-// Before unload alert section
-const dltPoForm = document.getElementById('delete-po-form') as HTMLFormElement
-
-window.addEventListener('beforeunload', e => {
-  if(!formSubmitting) {
-    const confirmMessage = "Are you sure want to leave this page? This order draft will deleted."
-    e.returnValue = confirmMessage
-
-    return confirmMessage
-  }
-})
-
-window.addEventListener('unload', e => {
-  if(!formSubmitting) {
-    dltPoForm.submit()
-  }
-})
 
 // Cash and change section
 const cashInput = document.getElementById('cash-input') as HTMLInputElement,

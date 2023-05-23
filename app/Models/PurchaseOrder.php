@@ -26,4 +26,9 @@ class PurchaseOrder extends Model
     {
         return $this->hasMany(PurchaseOrderItem::class, 'purchase_order_id');
     }
+
+    public function getInvIdAttribute(): string
+    {
+        return 'INV' . str_pad($this->attributes['id'], 9, '0', STR_PAD_LEFT);
+    }
 }

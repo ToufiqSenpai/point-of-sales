@@ -84,7 +84,6 @@ class PurchaseOrderController extends Controller
 
                 if($validator->fails()) break;
 
-                $purchase_order = PurchaseOrder::find($request->get('id'));
                 $purchase_order->supplier_id = $request['supplier_id'];
                 $purchase_order->save();
     
@@ -158,5 +157,11 @@ class PurchaseOrderController extends Controller
                 'error' => 'Product not found'
             ]);
         }
+    }
+
+    public function invoiceDetail(string $id): View
+    {
+        
+        return view('transaction.purchase-order.invoice-detail');
     }
 }

@@ -14,15 +14,13 @@
     <div class="grid grid-cols-3 gap-3  ">
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1 input-grid-area">
             <section class="flex justify-between items-center">
-                <p>Tanggal: <time id="transaction-date"></time></p>
+                <p>Tanggal: <time id="transaction-date" datetime="{{ $purchase_order?->created_at->toIso8601String() ?? '' }}"></time></p>
                 <p>Kasir: {{ Auth::user()->name }}</p>
             </section>
-            <select id="supplier-select"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2"
-                required>
+            <select id="supplier-select" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2" required>
                 <option selected disabled>Supplier</option>
                 @foreach ($suppliers as $supplier)
-                    <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                    <option value="{{ $supplier->id }}" @if($supplier->id == $purchase_order?->supplier_id) selected @endif>{{ $supplier->name }}</option>
                 @endforeach
             </select>
             {{-- FORM for set supplier --}}
@@ -92,12 +90,7 @@
                     <label for="change-input" class="block text-sm font-medium text-gray-900 mb-1">Change</label>
                     <input type="text" id="change-input" data-subtotal="{{ $subtotal }}" class="bg-gray-200 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="$0" disabled readonly>
                 </div>
-            </form>
-            {{-- Delete order archieve --}}
-            <form id="delete-po-form" method="POST" action="/transaction/purchase-order">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="id" value="{{ request()->get('id') }}" />
+                <button type="submit" class="focus:outline-none @if(count($purchase_order->items ?? [])) bg-green-400 text-white @else bg-green-500 cursor-not-allowed text-gray-200 @endif hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 mt-2 h-9 w-full" @if(!count($purchase_order->items ?? [])) disabled @endif>CONFIRM ORDER</button>
             </form>
         </section>
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1">

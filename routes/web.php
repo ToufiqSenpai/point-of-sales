@@ -85,6 +85,7 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
 
     // Purchase order endpoint
     Route::get('/transaction/purchase-order', [PurchaseOrderController::class, 'index']);
+    Route::get('/transaction/purchase-order/{id}', [PurchaseOrderController::class, 'invoiceDetail']);
     Route::post('/transaction/purchase-order', [PurchaseOrderController::class, 'order']);
     Route::delete('/transaction/purchase-order', [PurchaseOrderController::class, 'destroy']);
 });
