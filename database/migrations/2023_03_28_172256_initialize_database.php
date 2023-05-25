@@ -106,6 +106,9 @@ return new class extends Migration
             $table->integer('tax')->default(0);
             $table->bigInteger('shipping')->default(0);
             $table->enum('status', ['IN_ORDER', 'SUCCESS'])->default('IN_ORDER');
+            $table->integer('subtotal')->nullable();
+            $table->integer('cash')->nullable();
+            $table->integer('change')->nullable();
             $table->foreignId('supplier_id')->nullable()->constrained('supplier')->onDelete('set null');
             $table->softDeletes();
             $table->timestampsTz();

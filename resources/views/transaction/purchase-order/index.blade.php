@@ -81,7 +81,7 @@
                     </tbody>
                 </table>
             </div>
-            <form>
+            <form action="/transaction/purchase-order/confirm-order?id={{ request()->get('id') }}" method="POST">
                 <div class="@if(count($purchase_order->items ?? [])) mt-2 @else mt-[70px] @endif">
                     <label for="cash-input" class="block text-sm font-medium text-gray-900 mb-1">Cash</label>
                     <input type="number" id="cash-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

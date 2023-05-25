@@ -7,7 +7,7 @@ for(let i = 0; i < accordionsSidebar.length; i++) {
         const anchors = accordion.nextElementSibling.getElementsByTagName('a')
 
         for (const anchor of anchors) {
-            if(anchor.getAttribute('href') == location.pathname) {
+            if(anchor.getAttribute('href').startsWith(location.pathname)) {
                 const span = anchor.firstElementChild as HTMLElement
 
                 span.style.width = '8px'

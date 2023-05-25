@@ -138,6 +138,30 @@ class PurchaseOrderController extends Controller
         return redirect($back_url);
     }
 
+    public function confirmOrder(Request $request): RedirectResponse
+    {
+        $purchase_order = PurchaseOrder::find($request->get('id'));
+        
+        // Count all subtotal item
+        // item_price * quantity + subtotal
+        $subtotal = 0;
+        foreach($purchase_order->items ?? [] as $item) {
+            $subtotal += $item->product->base_price * $item->quantity;
+        }
+
+        // Validate cash, subtotal, and is supplier is setted.
+        $data_to_validate = [
+            'cash' => $request['cash'],
+            'subtotal' => $subtotal,
+            'supplier_id' => $purchase_order->supplier_id
+        ];
+        $validator = Validator::make($data_to_validate, [
+            'cash' => 'required|integer'
+        ]);
+
+        $validator->fails
+    }
+
     public function destroy(Request $request): RedirectResponse
     {
         $purchase_order = PurchaseOrder::find($request['id']);
@@ -161,7 +185,12 @@ class PurchaseOrderController extends Controller
 
     public function invoiceDetail(string $id): View
     {
+        $purchase_order = PurchaseOrder::find($id);
+
+        if(!$purchase_order || $purchase_order->status != 'SUCCESS') abort(404, 'Invoice not found');
         
-        return view('transaction.purchase-order.invoice-detail');
+        return view('transaction.purchase-order.invoice-detail', [
+            'purchase_order' => $purchase_order
+        ]);
     }
 }
