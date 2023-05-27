@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplierUpdateRequest extends FormRequest
+class SettingsUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,25 +21,25 @@ class SupplierUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->get('id');
         return [
-            'id' => 'required',
-            'name' => 'required|max:155|unique:supplier,name,'. $id,
-            'phone' => 'required|max:50|unique:supplier,phone,'. $id,
-            'email' => 'nullable|email:rfc,dns|unique:supplier,email,'. $id,
-            'address' => 'nullable|max:10000',
-            'description' => 'nullable|max:10000'
+            'name' => 'required|max:99|string',
+            'email' => 'required|email:rfc,dns|max:99',
+            'phone' => 'required|max:30',
+            'address' => 'required|max:10000',
+            'invoice_footer' => 'required|max:10000',
+            'shop_image' => 'nullable|image|max:10485760'
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'name' => 'Nama',
-            'phone' => 'No. Telepon',
+            'name' => 'Shop Name',
             'email' => 'Email',
-            'address' => 'Alamat',
-            'description' => 'Deskripsi'
+            'phone' => 'Phone',
+            'address' => 'Address',
+            'invoice_footer' => 'Invoice Footer',
+            'shop_image' => 'Shop Image'
         ];
     }
 }

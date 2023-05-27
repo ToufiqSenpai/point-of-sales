@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shop;
-use Illuminate\Http\Request;
+use App\Http\Requests\SettingsUpdateRequest;
+use App\Models\Settings;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class SettingsController extends Controller
@@ -11,7 +12,12 @@ class SettingsController extends Controller
     public function index(): View 
     {
         return view('settings.index', [
-            'shop' => Shop::find(1)->first()
+            'shop' => Settings::find(1)->first()
         ]);
+    }
+
+    public function update(SettingsUpdateRequest $request): RedirectResponse
+    {
+        Settings::find(1);
     }
 }

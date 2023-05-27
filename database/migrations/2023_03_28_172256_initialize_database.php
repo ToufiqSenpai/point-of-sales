@@ -139,7 +139,7 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('shop', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email');
@@ -169,6 +169,6 @@ return new class extends Migration
         Schema::dropIfExists('transaction_products');
         Schema::dropIfExists('purchase_order');
         Schema::dropIfExists('purchase_order_item');
-        Schema::dropIfExists('shop');
+        Schema::dropIfExists('settings');
     }
 };

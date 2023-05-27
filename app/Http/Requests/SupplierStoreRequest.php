@@ -30,16 +30,6 @@ class SupplierStoreRequest extends FormRequest
         ];
     }
 
-    public function messages(): array
-    {
-        return [
-            'required' => 'Harus diisi',
-            'unique' => ':attribute sudah tersedia',
-            'max' => ':attribute terlalu panjang',
-            'email' => 'Email tidak valid'
-        ];
-    }
-
     public function attributes(): array
     {
         return [

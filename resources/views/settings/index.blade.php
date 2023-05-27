@@ -1,12 +1,19 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Settings')
-
 @section('main')
+  @vite('resources/ts/script/settings/index.ts')
   <form class="bg-white rounded-md w-full p-3 min-h-full shadow-1" autocomplete="off">
+    @csrf
+    @method('PUT')
     <div>
-      <img src="/storage/icons/store.png" width="140" />
-      <button type="button" class="bg-green-500 text-green-900 px-3 rounded">CHANGE IMAGE</button>
+      <div class="w-[140px] h-[140px] overflow-hidden">
+        <img id="shop_image" src="/storage/icons/shop.png" class="object-cover w-full" />
+      </div>
+      <label class="bg-green-500 text-green-900 px-3 rounded cursor-pointer font-medium">
+        CHANGE IMAGE
+        <input id="input-file" type="file" name="shop_image" accept=".jpg,.jpeg,.png" hidden />
+      </label>
     </div>
     <div class="mt-2">
       <label for="name" class="block mb-1 text-sm font-medium text-gray-900">Shop Name</label>
@@ -28,5 +35,6 @@
       <label for="invoice_footer" class="block mb-2 text-sm font-medium text-gray-900">Invoice Footer</label>
       <textarea id="invoice_footer" name="invoice_footer" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ $shop->invoice_footer }}</textarea>
     </div>
+    <button type="submit" class="bg-green-500 text-black rounded w-20 mt-2">SAVE</button>
   </form>
 @endsection

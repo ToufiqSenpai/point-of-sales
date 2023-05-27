@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('shop')->insert([
+        DB::table('settings')->insert([
             'name' => 'POINT OF SALES',
             'email' => 'pointofsales@example.com',
             'phone' => '123456789',

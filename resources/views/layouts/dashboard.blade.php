@@ -15,8 +15,10 @@
     <aside
         class="fixed top-0 left-0 bottom-0 w-[240px] h-screen bg-white border-r border-solid border-[rgba(0, 0, 0, 0.12)] p-3 overflow-y-auto">
         <div class="flex items-center">
-            <img src="/storage/icons/store.png" width="50" />
-            <h1 class="text-xl font-semibold ml-2">{{ \App\Models\Shop::find(1)->first()->name }}</h1>
+            <div class="w-[50px] h-[50px] overflow-hidden">
+                <img src="/storage/icons/shop.png" class="object-cover w-full" />
+            </div>
+            <h1 class="text-xl font-semibold ml-2">{{ \App\Models\Settings::find(1)->first()->name }}</h1>
         </div>
         <ul class="space-y-1 mt-5 font-medium text-gray-500">
             <li>
@@ -151,7 +153,7 @@
         </ul>
     </aside>
     <nav
-        class="fixed top-0 right-0 w-full max-w-[calc(100%-240px)] h-11 bg-white border-b border-solid border-[rgba(0, 0, 0, 0.12)] px-4 flex items-center">
+        class="fixed top-0 right-0 w-full max-w-[calc(100%-240px)] h-11 bg-white border-b border-solid border-[rgba(0, 0, 0, 0.12)] px-4 flex items-center z-50">
         <h2 class="font-medium text-xl">@yield('title')</h2>
     </nav>
     <main class="w-full max-w-[calc(100%-240px)] mt-14 ml-auto max-ipad:px-4 min-ipad:px-8 relative">

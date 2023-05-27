@@ -30,16 +30,6 @@ class CustomerUpdateRequest extends FormRequest
         ];
     }
 
-    public function messages(): array
-    {
-        return [
-            'required' => 'Harus diisi',
-            'unique' => ':attribute sudah tersedia',
-            'max' => ':attribute terlalu panjang',
-            'image.max' => 'File terlalu besar'
-        ];
-    }
-
     public function attributes(): array
     {
         return [

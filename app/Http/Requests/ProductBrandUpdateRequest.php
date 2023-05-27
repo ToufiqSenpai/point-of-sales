@@ -28,15 +28,6 @@ class ProductBrandUpdateRequest extends FormRequest
         ];
     }
 
-    public function messages(): array
-    {
-        return [
-            'required' => 'Harus diisi',
-            'unique' => ':attribute sudah tersedia',
-            'max' => ':attribute terlalu panjang'
-        ];
-    }
-
     public function attributes(): array
     {
         return [
