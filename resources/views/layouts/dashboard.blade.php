@@ -15,8 +15,8 @@
     <aside
         class="fixed top-0 left-0 bottom-0 w-[240px] h-screen bg-white border-r border-solid border-[rgba(0, 0, 0, 0.12)] p-3 overflow-y-auto">
         <div class="flex items-center">
-            <img src="/__test__/rice.png" width="50" />
-            <h1 class="text-xl font-semibold ml-2">POINT OF SALES</h1>
+            <img src="/storage/icons/store.png" width="50" />
+            <h1 class="text-xl font-semibold ml-2">{{ \App\Models\Shop::find(1)->first()->name }}</h1>
         </div>
         <ul class="space-y-1 mt-5 font-medium text-gray-500">
             <li>
@@ -27,7 +27,8 @@
                 </a>
             </li>
             <li>
-                <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
+                <button
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
                     <span class="material-icons sidebar">point_of_sale</span>
                     <span class="ml-3">Transaksi</span>
                 </button>
@@ -48,7 +49,8 @@
                 </ul>
             </li>
             <li>
-                <button class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
+                <button
+                    class="flex items-center p-2 rounded-lg hover:bg-gray-100 duration-300 accordion-sidebar w-full">
                     <span class="material-icons sidebar">groups</span>
                     <span class="ml-3">Customer</span>
                 </button>
@@ -142,6 +144,10 @@
                     </li>
                 </ul>
             </li>
+            <a href="/settings" id="button" class="flex items-center p-2 rounded-lg hover:bg-gray-100 accordion-sidebar">
+                <span class="material-icons sidebar">settings</span>
+                <span class="ml-3">Settings</span>
+            </a>
         </ul>
     </aside>
     <nav
@@ -155,7 +161,7 @@
         @if (session()->has('error'))
             <x-alert type="error">{{ session('error') }}</x-alert>
         @endif
-        @if(session()->has('error_list'))
+        @if (session()->has('error_list'))
             <x-alert-list type="error" errors="{{ session('error_list') }}" />
         @endif
         @yield('main')

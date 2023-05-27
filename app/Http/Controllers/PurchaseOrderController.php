@@ -159,7 +159,7 @@ class PurchaseOrderController extends Controller
             'cash' => 'required|integer'
         ]);
 
-        $validator->fails
+        // $validator->fails
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -187,7 +187,7 @@ class PurchaseOrderController extends Controller
     {
         $purchase_order = PurchaseOrder::find($id);
 
-        if(!$purchase_order || $purchase_order->status != 'SUCCESS') abort(404, 'Invoice not found');
+        // if(!$purchase_order || $purchase_order->status != 'SUCCESS') abort(404, 'Invoice not found');
         
         return view('transaction.purchase-order.invoice-detail', [
             'purchase_order' => $purchase_order

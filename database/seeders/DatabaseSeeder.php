@@ -13,6 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('shop')->insert([
+            'name' => 'POINT OF SALES',
+            'email' => 'pointofsales@example.com',
+            'phone' => '123456789',
+            'address' => 'Jl. kamana wae',
+            'invoice_footer' => 'Terima kasih. Barang yang sudah dibeli tidak bisa dikembalikan.'
+        ]);
+
         DB::table('user')->insert([
             'name' => 'root',
             'username' => 'root',

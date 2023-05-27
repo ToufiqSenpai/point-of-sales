@@ -145,8 +145,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone');
             $table->text('address');
-            $table->string('shop_logo');
-            $table->string('nota_footer');
+            $table->text('invoice_footer');
             $table->timestampsTz();
         });
     }
@@ -168,6 +167,8 @@ return new class extends Migration
         Schema::dropIfExists('customers');
         Schema::dropIfExists('transactions');
         Schema::dropIfExists('transaction_products');
+        Schema::dropIfExists('purchase_order');
+        Schema::dropIfExists('purchase_order_item');
         Schema::dropIfExists('shop');
     }
 };

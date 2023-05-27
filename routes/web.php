@@ -13,6 +13,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,4 +100,7 @@ Route::middleware('auth:OWNER')->group(function () {
     Route::post('/user/add', [UserController::class, 'store']);
     Route::get('/user/edit/{id}', [UserController::class, 'edit']);
     Route::put('/user/edit', [UserController::class, 'update']);
+
+    // Settings route endpoint
+    Route::get('/settings', [SettingsController::class, 'index']);
 });
