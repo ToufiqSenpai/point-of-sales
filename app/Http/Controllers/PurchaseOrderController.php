@@ -7,6 +7,7 @@ use App\Models\Supplier;
 use App\Models\PurchaseOrder;
 use App\Enums\TransactionAction;
 use App\Models\PurchaseOrderItem;
+use App\Models\Settings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -190,7 +191,8 @@ class PurchaseOrderController extends Controller
         // if(!$purchase_order || $purchase_order->status != 'SUCCESS') abort(404, 'Invoice not found');
         
         return view('transaction.purchase-order.invoice-detail', [
-            'purchase_order' => $purchase_order
+            'purchase_order' => $purchase_order,
+            'settings' => Settings::find(1)
         ]);
     }
 }
