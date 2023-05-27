@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SettingsUpdateRequest;
 use App\Models\Settings;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class SettingsController extends Controller
@@ -18,6 +19,15 @@ class SettingsController extends Controller
 
     public function update(SettingsUpdateRequest $request): RedirectResponse
     {
-        Settings::find(1);
+        $image = $request->file('shop_image');
+
+        if($image) {
+            Storage::disk('public')->delete('icons/shop.png');
+            $image->storeAs('icons', 'shop.png', 'public');
+        }
+
+        Settings::find(1)->update($request->all());
+
+        return back()->with('success', 'Settings have been saved');
     }
 }

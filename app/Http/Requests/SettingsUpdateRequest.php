@@ -23,7 +23,7 @@ class SettingsUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:99|string',
-            'email' => 'required|email:rfc,dns|max:99',
+            'email' => 'required|email|max:99',
             'phone' => 'required|max:30',
             'address' => 'required|max:10000',
             'invoice_footer' => 'required|max:10000',

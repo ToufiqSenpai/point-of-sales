@@ -103,4 +103,5 @@ Route::middleware('auth:OWNER')->group(function () {
 
     // Settings route endpoint
     Route::get('/settings', [SettingsController::class, 'index']);
+    Route::put('/settings', [SettingsController::class, 'update']);
 });
