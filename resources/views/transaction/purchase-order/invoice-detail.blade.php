@@ -71,8 +71,26 @@
                 </tbody>
             </table>
         </div>
-        <section>
-
+        <section class="max-w-lg ml-auto mt-1">
+            <h1 class="text-2xl text-gray-500">Payment</h1>
+            <hr class="my-2" />
+            <div class="flex items-center justify-start">
+                <h4 class="w-60 font-medium">Total</h4>
+                <p class="w-60">$320</p>
+            </div>
+            <hr class="my-2" />
+            <div class="flex items-center justify-start">
+                <h4 class="w-60 font-medium">Cash</h4>
+                <p class="w-60">$320</p>
+            </div>
+            <hr class="my-2" />
+            <div class="flex items-center justify-start">
+                <h4 class="w-60 font-medium">Change</h4>
+                <p class="w-60">$320</p>
+            </div>
+        </section>
+        <section class="max-w-lg ml-auto mt-1 flex justify-end">
+            <button type="button" class="bg-green-500 px-5 py-0.5 cursor-pointer rounded font-medium flex items-center">Options<span class="material-icons">expand_more</span></button>
         </section>
     </div>
 @endsection
