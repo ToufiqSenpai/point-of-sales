@@ -4,7 +4,25 @@
 
 @section('main')
     @vite('resources/ts/script/transaction/purchase-order/invoice-detail.ts')
-    <div class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
+    <style>
+        @media print {
+            body {
+                visibility: hidden;
+            }
+
+            #printable-area {
+                visibility: visible;
+                position: fixed;
+                top: 0;
+                left: 0;
+            }
+
+            .excepted-el {
+                visibility: hidden;
+            }
+        }
+    </style>
+    <div id="printable-area" class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
         <header class="flex items-center justify-between">
             <div class="flex items-center">
                 <div class="w-[50px] h-[50px] overflow-hidden ">
@@ -71,7 +89,7 @@
                 </tbody>
             </table>
         </div>
-        <section class="max-w-lg ml-auto mt-1">
+        <section class="max-w-sm ml-auto mt-1">
             <h1 class="text-2xl text-gray-500">Payment</h1>
             <hr class="my-2" />
             <div class="flex items-center justify-start">
@@ -89,9 +107,10 @@
                 <p class="w-60">$320</p>
             </div>
         </section>
-        <section class="max-w-lg ml-auto mt-1 flex justify-end">
+        <section class="max-w-lg ml-auto mt-1 flex justify-end relative">
             {{-- Tombol options --}}
-            <button type="button" class="bg-green-500 px-5 py-0.5 cursor-pointer rounded font-medium flex items-center">Options<span class="material-icons">expand_more</span></button>
+            <button type="button" id="print-btn" class="excepted-el bg-green-500 px-5 py-0.5 cursor-pointer rounded font-medium flex items-center">Print<span class="material-icons ml-2">print</span></button>
+            <button type="button" id="save-img-btn" class="excepted-el bg-red-500 px-5 py-0.5 cursor-pointer rounded font-medium flex items-center ml-2">Save as Image<span class="material-icons ml-2">image</span></button>
         </section>
     </div>
 @endsection
