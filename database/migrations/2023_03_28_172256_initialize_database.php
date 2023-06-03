@@ -82,14 +82,6 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('outgoing_stock', function (Blueprint $table) {
-            $table->id();
-            $table->text('description');
-            $table->integer('amount');
-            $table->foreignId('product_id')->constrained('product')->onDelete('cascade');
-            $table->timestampsTz();
-        });
-
         Schema::create('customer', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
@@ -122,20 +114,26 @@ return new class extends Migration
             $table->timestampsTz();
         });
 
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('sales_order', function (Blueprint $table) {
             $table->id();
-            $table->integer('discount');
-            $table->integer('tax');
-            $table->bigInteger('shipping');
-            $table->foreignId('customer_id')->constrained('customer')->onDelete('cascade');
-            $table->foreignId('cashier_id')->constrained('user')->onDelete('cascade');
+            $table->integer('discount')->default(0);
+            $table->integer('tax')->default(0);
+            $table->bigInteger('shipping')->default(0);
+            $table->enum('status', ['IN_ORDER', 'SUCCESS'])->default('IN_ORDER');
+            $table->integer('subtotal')->nullable();
+            $table->integer('cash')->nullable();
+            $table->integer('change')->nullable();
+            $table->foreignId('customer_id')->nullable()->constrained('supplier')->onDelete('set null');
+            $table->foreignId('cashier_id')->nullable()->constrained('user')->onDelete('set null');
+            $table->softDeletes();
             $table->timestampsTz();
         });
 
-        Schema::create('transaction_product', function (Blueprint $table) {
+        Schema::create('sales_order_item', function (Blueprint $table) {
             $table->id();
-            $table->integer('amount');
-            $table->integer('discount');
+            $table->integer('quantity');
+            $table->foreignId('product_id')->nullable()->constrained('product')->onDelete('set null');
+            $table->foreignId('purchase_order_id')->constrained('purchase_order')->onDelete('cascade');
             $table->timestampsTz();
         });
 
@@ -156,17 +154,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('product_categories');
-        Schema::dropIfExists('product_brands');
-        Schema::dropIfExists('product_images');
-        Schema::dropIfExists('product_units');
-        Schema::dropIfExists('products');
-        Schema::dropIfExists('suppliers');
-        Schema::dropIfExists('incoming_stocks');
-        Schema::dropIfExists('outgoing_stocks');
-        Schema::dropIfExists('customers');
-        Schema::dropIfExists('transactions');
-        Schema::dropIfExists('transaction_products');
+        Schema::dropIfExists('product_category');
+        Schema::dropIfExists('product_brand');
+        Schema::dropIfExists('product_image');
+        Schema::dropIfExists('product_unit');
+        Schema::dropIfExists('product');
+        Schema::dropIfExists('supplier');
+        Schema::dropIfExists('customer');
         Schema::dropIfExists('purchase_order');
         Schema::dropIfExists('purchase_order_item');
         Schema::dropIfExists('settings');
