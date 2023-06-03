@@ -163,9 +163,6 @@
         @if (session()->has('error'))
             <x-alert type="error">{{ session('error') }}</x-alert>
         @endif
-        @if (session()->has('error_list'))
-            <x-alert-list type="error" errors="{{ session('error_list') }}" />
-        @endif
         @yield('main')
     </main>
 </body>

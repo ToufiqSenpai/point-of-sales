@@ -12,6 +12,9 @@
         }
     </style>
     <div class="grid grid-cols-3 gap-3  ">
+        @if($errors->any())
+            <x-alert-errors />
+        @endif
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1 input-grid-area">
             <section class="flex justify-between items-center">
                 <p>Tanggal: <time id="transaction-date" datetime="{{ $purchase_order?->created_at->toIso8601String() ?? '' }}"></time></p>
@@ -82,9 +85,10 @@
                 </table>
             </div>
             <form action="/transaction/purchase-order/confirm-order?id={{ request()->get('id') }}" method="POST">
+                @csrf
                 <div class="@if(count($purchase_order->items ?? [])) mt-2 @else mt-[70px] @endif">
                     <label for="cash-input" class="block text-sm font-medium text-gray-900 mb-1">Cash</label>
-                    <input type="number" id="cash-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <input type="number" id="cash-input" name="cash" value="{{ old('cash') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
                 <div class="mt-2">
                     <label for="change-input" class="block text-sm font-medium text-gray-900 mb-1">Change</label>

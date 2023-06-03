@@ -20,7 +20,10 @@ class PurchaseOrder extends Model
         'discount',
         'shipping',
         'supplier_id',
-        'status'
+        'status',
+        'cash',
+        'change',
+        'subtotal'
     ];
 
     public function items(): HasMany

@@ -46,7 +46,6 @@
         <div class="relative overflow-x-auto sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                    @foreach ($purchase_order->items as $item)
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 ID
@@ -64,7 +63,6 @@
                                 Subtotal
                             </th>
                         </tr>
-                    @endforeach
                 </thead>
                 <tbody>
                     @foreach($purchase_order->items as $item)
@@ -94,17 +92,17 @@
             <hr class="my-2" />
             <div class="flex items-center justify-start">
                 <h4 class="w-60 font-medium">Total</h4>
-                <p class="w-60">$320</p>
+                <p class="w-60">${{ $purchase_order->subtotal }}</p>
             </div>
             <hr class="my-2" />
             <div class="flex items-center justify-start">
                 <h4 class="w-60 font-medium">Cash</h4>
-                <p class="w-60">$320</p>
+                <p class="w-60">${{ $purchase_order->cash }}</p>
             </div>
             <hr class="my-2" />
             <div class="flex items-center justify-start">
                 <h4 class="w-60 font-medium">Change</h4>
-                <p class="w-60">$320</p>
+                <p class="w-60">${{ $purchase_order->change }}</p>
             </div>
         </section>
         <section class="max-w-lg ml-auto mt-1 flex justify-end relative">

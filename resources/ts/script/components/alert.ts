@@ -4,7 +4,7 @@ if(alertDisplay) {
     alertDisplay.style.top = '3%'
 
     setTimeout(() => {
-        alertDisplay.style.top = '-8%'
+        alertDisplay.style.top = '-50%'
     }, 4000)
 }
 

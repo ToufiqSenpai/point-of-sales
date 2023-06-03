@@ -141,7 +141,10 @@ class PurchaseOrderController extends Controller
 
     public function confirmOrder(Request $request): RedirectResponse
     {
+        // Find purchase order data with query "id"
+        // If id not found, redirect to back url with session.
         $purchase_order = PurchaseOrder::find($request->get('id'));
+        if(!$purchase_order) return back()->with('error', 'Purchase Order id not found.');
         
         // Count all subtotal item
         // item_price * quantity + subtotal
@@ -157,10 +160,22 @@ class PurchaseOrderController extends Controller
             'supplier_id' => $purchase_order->supplier_id
         ];
         $validator = Validator::make($data_to_validate, [
-            'cash' => 'required|integer'
+            'cash' => 'required|integer',
+            'subtotal' => 'required|lte:cash',
+            'supplier_id' => 'required|exists:supplier,id'
         ]);
 
-        // $validator->fails
+        if($validator->fails()) {
+            return back()->withErrors($validator);
+        }
+
+        $purchase_order->status = 'SUCCESS';
+        $purchase_order->cash = $request['cash'];
+        $purchase_order->change = (int) $request['cash'] - $subtotal;
+        $purchase_order->subtotal = $subtotal;
+        $purchase_order->save();
+
+        return redirect("/transaction/purchase-order/". $purchase_order->id);
     }
 
     public function destroy(Request $request): RedirectResponse

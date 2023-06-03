@@ -89,6 +89,7 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::get('/transaction/purchase-order/{id}', [PurchaseOrderController::class, 'invoiceDetail']);
     Route::post('/transaction/purchase-order', [PurchaseOrderController::class, 'order']);
     Route::delete('/transaction/purchase-order', [PurchaseOrderController::class, 'destroy']);
+    Route::post('/transaction/purchase-order/confirm-order', [PurchaseOrderController::class, 'confirmOrder']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {
