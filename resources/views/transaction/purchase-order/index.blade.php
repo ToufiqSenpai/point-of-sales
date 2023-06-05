@@ -102,7 +102,7 @@
         </section>
         <section id="select-product" class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
             <form>
-                <input type="text" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2" placeholder="Search product...">
+                <input type="text" name="search" value="{{ request()->get('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-2" placeholder="Search product...">
             </form>
             <div class="mt-2 grid grid-cols-3">
                 @foreach ($products as $product)

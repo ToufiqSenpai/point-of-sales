@@ -29,7 +29,7 @@ class PurchaseOrderController extends Controller
 
         return view('transaction.purchase-order.index', [
             'suppliers' => Supplier::all(),
-            'products' => Product::all(),
+            'products' => Product::where('name', 'LIKE', '%'. $request->get('search') .'%')->get(),
             'purchase_order' => $purchase_order,
             'subtotal' => $subtotal
         ]);
@@ -203,7 +203,7 @@ class PurchaseOrderController extends Controller
     {
         $purchase_order = PurchaseOrder::find($id);
 
-        // if(!$purchase_order || $purchase_order->status != 'SUCCESS') abort(404, 'Invoice not found');
+        if(!$purchase_order || $purchase_order->status != 'SUCCESS') abort(404, 'Invoice not found');
         
         return view('transaction.purchase-order.invoice-detail', [
             'purchase_order' => $purchase_order,

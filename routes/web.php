@@ -13,6 +13,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductBrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\SalesOrderController;
 use App\Http\Controllers\SettingsController;
 
 /*
@@ -90,6 +91,9 @@ Route::middleware('auth:ADMIN,OWNER')->group(function() {
     Route::post('/transaction/purchase-order', [PurchaseOrderController::class, 'order']);
     Route::delete('/transaction/purchase-order', [PurchaseOrderController::class, 'destroy']);
     Route::post('/transaction/purchase-order/confirm-order', [PurchaseOrderController::class, 'confirmOrder']);
+
+    // Sales Order Middleware
+    Route::get('/transaction/sales-order', [SalesOrderController::class, 'index']);
 });
 
 Route::middleware('auth:OWNER')->group(function () {
