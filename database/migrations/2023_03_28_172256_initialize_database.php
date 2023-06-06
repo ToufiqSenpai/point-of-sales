@@ -133,7 +133,7 @@ return new class extends Migration
             $table->id();
             $table->integer('quantity');
             $table->foreignId('product_id')->nullable()->constrained('product')->onDelete('set null');
-            $table->foreignId('purchase_order_id')->constrained('purchase_order')->onDelete('cascade');
+            $table->foreignId('sales_order_id')->constrained('sales_order')->onDelete('cascade');
             $table->timestampsTz();
         });
 

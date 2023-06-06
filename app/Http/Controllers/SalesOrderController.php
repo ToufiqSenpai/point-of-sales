@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\SalesOrder;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -22,7 +23,10 @@ class SalesOrderController extends Controller
         }
 
         return view('transaction.sales-order.index', [
-            'products' => Product::all()
+            'products' => Product::all(),
+            'sales_order' => $sales_order,
+            'subtotal' => $subtotal,
+            'customers' => Customer::all()
         ]);
     }
 

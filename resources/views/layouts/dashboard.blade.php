@@ -43,6 +43,13 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/transaction/sales-order"
+                            class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
+                            <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
+                            <p>Sales Order</p>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/transaction/history" class="p-1 hover:bg-gray-100 flex items-center rounded-lg">
                             <span class="w-1 h-1 bg-black rounded-full ml-4 mr-6"></span>
                             <p>History</p>
