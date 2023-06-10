@@ -86,7 +86,7 @@
             </div>
             <form action="/transaction/purchase-order/confirm-order?id={{ request()->get('id') }}" method="POST">
                 @csrf
-                <div class="@if(count($sales_order?>items ?? [])) mt-2 @else mt-[70px] @endif">
+                <div class="@if(count($sales_order?->items ?? [])) mt-2 @else mt-[70px] @endif">
                     <label for="cash-input" class="block text-sm font-medium text-gray-900 mb-1">Cash</label>
                     <input type="number" id="cash-input" name="cash" value="{{ old('cash') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                 </div>
@@ -94,7 +94,7 @@
                     <label for="change-input" class="block text-sm font-medium text-gray-900 mb-1">Change</label>
                     <input type="text" id="change-input" data-subtotal="{{ $subtotal }}" class="bg-gray-200 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="$0" disabled readonly>
                 </div>
-                <button type="submit" class="focus:outline-none @if(count($sales_order?>items ?? [])) bg-green-400 text-white @else bg-green-500 cursor-not-allowed text-gray-200 @endif hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 mt-2 h-9 w-full" @if(!count($sales_order?>items ?? [])) disabled @endif>CONFIRM ORDER</button>
+                <button type="submit" class="focus:outline-none @if(count($sales_order->items ?? [])) bg-green-400 text-white @else bg-green-500 cursor-not-allowed text-gray-200 @endif hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 mt-2 h-9 w-full" @if(!count($sales_order->items ?? [])) disabled @endif>CONFIRM ORDER</button>
             </form>
         </section>
         <section class="bg-white rounded-md w-full p-3 min-h-full shadow-1">
